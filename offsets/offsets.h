@@ -1,7 +1,19 @@
 #pragma once
+#include <vector>
 
-/*//////////////// STALKER NET 17.3b ///////////////*/
-//Player
+class Offsets
+{
+public:
+
+	Offsets() {}
+
+	enum class Player
+	{
+		Actor = 0x6ECC04,
+		ActorCondition = 0x9D8,
+	};
+};
+
 #define oActorCondition 0x9D8
 #define oCActorMP 0x6ECC04 
 #define oCrosshair 0x992D4

@@ -24,14 +24,14 @@
     <ClInclude Include="pch.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="include\ConsoleMessages.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="include\handles.hpp">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\processes.hpp">
       <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="Memory.hpp">
+      <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -46,6 +46,9 @@
     </ClCompile>
     <ClCompile Include="include\processes.cpp">
       <Filter>include</Filter>
+    </ClCompile>
+    <ClCompile Include="Memory.cpp">
+      <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
