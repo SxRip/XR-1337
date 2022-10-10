@@ -1,5 +1,4 @@
 #pragma once
-#include <vector>
 
 class Offsets
 {
@@ -24,7 +23,7 @@ public:
 
 //CActorCondition
 #define oHP 0x4
-#define oStamina 0x114
+//#define oStamina 0x114
 
 //CInventory
 #define oMoney 0x24
