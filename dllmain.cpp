@@ -4,18 +4,15 @@
 
 void WINAPI Main(HMODULE hModule)
 {
-	DWORD dwClientBase = reinterpret_cast<DWORD>(GetModuleHandle("xrGame.dll"));
-	Memory mem;
-	//const std::vector<DWORD> oStamina{ 0x6ECC04, 0x9D8, 0x114 };
-
 	Offsets offsets;
-
+	Memory mem;
+	
 	while (true)
 	{
 		if (GetAsyncKeyState(VK_END))
 			break;
 
-		float* pStamina = mem.get_pointer<float>(offsets.g_stamina);
+		float* pStamina = mem.get_pointer<float>(offsets.ActorStamina);
 
 		if (pStamina)
 			*pStamina = 1;

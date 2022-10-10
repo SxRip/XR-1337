@@ -5,10 +5,26 @@ class Offsets
 {
 public:
 	using DWORD = unsigned long;
-	Offsets() : _stalkerNETStamina{ Player::BaseActor, Player::ActorCondition, Player::Stamina }
+	Offsets() :
+		_NETStamina{ Player::BaseActor, Player::ActorCondition, Player::Stamina },
+		_NETHP{ Player::BaseActor, Player::ActorCondition, Player::HP },
+		_NETCrosshairTargetExists{ Crosshair::BaseCrosshair, Crosshair::IsTarget },
+		_NETCrosshairTargetType{ Crosshair::BaseCrosshair, Crosshair::TargetType },
+		_NETInventoryMoney{ Inventory::BaseInventory, Inventory::ActorInventory, Inventory::Money },
+		_NETInventoryWeight{ Inventory::BaseInventory, Inventory::ActorInventory, Inventory::Weight }
 	{
-		g_stamina = _stalkerNETStamina;
+		ActorStamina = _NETStamina;
+		ActorHP = _NETHP;
+		ActorCrosshairTargetExists = _NETCrosshairTargetExists;
+		ActorCrosshairTargetType = _NETCrosshairTargetType;
+		ActorMoney = _NETInventoryMoney;
+		ActorWeight = _NETInventoryWeight;
 	}
+
+	std::vector<DWORD> ActorStamina, ActorHP,
+		ActorCrosshairTargetExists, ActorCrosshairTargetType,
+		ActorMoney, ActorWeight;
+private:
 
 	enum Game
 	{
@@ -18,19 +34,34 @@ public:
 	enum Player
 	{
 		BaseActor = 0x6ECC04,
+
 		ActorCondition = 0x9D8,
 		HP = 0x4,
 		Stamina = 0x114,
+
+
+	};
+
+	enum Crosshair
+	{
+		BaseCrosshair = 0x992D4,
+		IsTarget = 0x8,
+		TargetType = 0x14
 	};
 
 	enum Inventory
 	{
+		BaseInventory = 0x6ECC04,
 
+		ActorInventory = 0x9D8,
+		Money = 0x24,
+		Weight = 0x5C
 	};
 
-	std::vector<DWORD> g_stamina;
-private:
-	std::vector<DWORD> _stalkerNETStamina;
+
+	std::vector<DWORD> _NETStamina, _NETHP,
+		_NETCrosshairTargetExists, _NETCrosshairTargetType,
+		_NETInventoryMoney, _NETInventoryWeight;
 };
 
 #define oActorCondition 0x9D8
