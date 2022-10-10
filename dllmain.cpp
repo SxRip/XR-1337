@@ -1,22 +1,21 @@
 ﻿#include "offsets/offsets.h"
 #include "include/handles.hpp"
-#include <sstream>
 #include "Memory.hpp"
-#include <vector>
 
 void WINAPI Main(HMODULE hModule)
 {
 	DWORD dwClientBase = reinterpret_cast<DWORD>(GetModuleHandle("xrGame.dll"));
 	Memory mem;
+	//const std::vector<DWORD> oStamina{ 0x6ECC04, 0x9D8, 0x114 };
 
-	const std::vector<DWORD> oStamina{ 0x6ECC04, 0x9D8, 0x114 };
+	Offsets offsets;
 
 	while (true)
 	{
 		if (GetAsyncKeyState(VK_END))
 			break;
 
-		float* pStamina = mem.get_pointer<float>(oStamina);
+		float* pStamina = mem.get_pointer<float>(offsets.g_stamina);
 
 		if (pStamina)
 			*pStamina = 1;

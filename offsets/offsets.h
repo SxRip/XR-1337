@@ -1,16 +1,36 @@
 #pragma once
+#include <vector>
 
 class Offsets
 {
 public:
-
-	Offsets() {}
-
-	enum class Player
+	using DWORD = unsigned long;
+	Offsets() : _stalkerNETStamina{ Player::BaseActor, Player::ActorCondition, Player::Stamina }
 	{
-		Actor = 0x6ECC04,
-		ActorCondition = 0x9D8,
+		g_stamina = _stalkerNETStamina;
+	}
+
+	enum Game
+	{
+
 	};
+
+	enum Player
+	{
+		BaseActor = 0x6ECC04,
+		ActorCondition = 0x9D8,
+		HP = 0x4,
+		Stamina = 0x114,
+	};
+
+	enum Inventory
+	{
+
+	};
+
+	std::vector<DWORD> g_stamina;
+private:
+	std::vector<DWORD> _stalkerNETStamina;
 };
 
 #define oActorCondition 0x9D8
