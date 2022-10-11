@@ -23,6 +23,7 @@ public:
 			if (!dwClientBase)
 				return nullptr;
 		}
+		return nullptr;
 	}
 
 	template <class _Ptr_value_type, class _Collection>
@@ -43,6 +44,7 @@ public:
 			if (!dwClientBase)
 				return nullptr;
 		}
+		return nullptr;
 	}
 
 };
