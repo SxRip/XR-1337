@@ -1,6 +1,7 @@
 ﻿#include "offsets/offsets.h"
 #include "include/handles.hpp"
 #include "Memory.hpp"
+#include "include/processes.hpp"
 
 void WINAPI Main(HMODULE hModule)
 {
@@ -12,10 +13,15 @@ void WINAPI Main(HMODULE hModule)
 		if (GetAsyncKeyState(VK_END))
 			break;
 
+		std::vector<DWORD> CrosshairTargetExists{ 0x992D4, 0x4C, 0x14 };
+		std::vector<DWORD> CrosshairDelayInfo{ 0x992D4, 0x4C, 0x4 };
+
 		float* pWeight = mem.get_pointer<float>(offsets.ActorWeight);
 		float* pStamina = mem.get_pointer<float>(offsets.ActorStamina);
 		int* pMoney = mem.get_pointer<int>(offsets.ActorMoney);
 		const char* name = mem.get_pointer<const char>(offsets.ActorName);
+		float* pCrosshair = mem.get_pointer<float>(CrosshairTargetExists, "xrEngine.exe");
+		float* pCrosshairInfo = mem.get_pointer<float>(CrosshairDelayInfo, "xrEngine.exe");
 
 		if (pStamina)
 			*pStamina = 1;
@@ -25,6 +31,18 @@ void WINAPI Main(HMODULE hModule)
 
 		if (pMoney)
 			*pMoney = 100000;
+
+		if (pCrosshair)
+		{
+			if (*pCrosshair && GetForegroundWindowName() == "xrEngine.exe")
+			{
+				mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
+				mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
+			}
+		}
+
+		if (pCrosshairInfo)
+			*pCrosshairInfo = 1;
 
 		Sleep(1);
 	}
