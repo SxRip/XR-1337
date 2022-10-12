@@ -60,11 +60,11 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call,
 		HANDLE hThread = CreateThread(nullptr, 0, reinterpret_cast<LPTHREAD_START_ROUTINE>(Main),
 			hModule, 0, nullptr);
 
-		if (!hThread)
-		{
-			MessageBox(nullptr, "Can't create the thread", nullptr, MB_ICONERROR);
-			return -1;
-		}
+			if (!hThread)
+			{
+				MessageBox(nullptr, "Can't create the thread", nullptr, MB_ICONERROR);
+				return -1;
+			}
 		SafeCloseHandle(hThread);
 	}
 	}

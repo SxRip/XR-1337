@@ -6,8 +6,8 @@ class Offsets
 public:
 	using DWORD = unsigned long;
 	Offsets() :
-		_NETStamina{ Inventory::BaseInventory, ActorCondition::BaseActorCondition, ActorCondition::Stamina },
-		_NETHP{ Inventory::BaseInventory, ActorCondition::BaseActorCondition, ActorCondition::HP },
+		_NETStamina{ ActorMP::BaseActor, ActorCondition::BaseActorCondition, ActorCondition::Stamina },
+		_NETHP{ ActorMP::BaseActor, ActorCondition::BaseActorCondition, ActorCondition::HP },
 		_NETActorName{ ActorMP::BaseActor, ActorMP::Name },
 		_NETCrosshairTargetExists{ Crosshair::BaseCrosshair, Crosshair::IsTarget },
 		_NETCrosshairTargetType{ Crosshair::BaseCrosshair, Crosshair::TargetType },
