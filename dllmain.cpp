@@ -1,11 +1,11 @@
-﻿#include "offsets/offsets.h"
+﻿#include "include/Memory.hpp"
+#include "offsets/offsets.hpp"
 #include "include/handles.hpp"
-#include "Memory.hpp"
 #include "include/processes.hpp"
 
 void WINAPI Main(HMODULE hModule)
 {
-	Offsets offsets;
+	Offsets offsets(MOD::StalkerNET);
 	Memory mem;
 
 	while (true)
@@ -13,15 +13,18 @@ void WINAPI Main(HMODULE hModule)
 		if (GetAsyncKeyState(VK_END))
 			break;
 
-		std::vector<DWORD> CrosshairTargetExists{ 0x992D4, 0x4C, 0x14 };
-		std::vector<DWORD> CrosshairDelayInfo{ 0x992D4, 0x4C, 0x4 };
-
-		float* pWeight = mem.get_pointer<float>(offsets.ActorWeight);
 		float* pStamina = mem.get_pointer<float>(offsets.ActorStamina);
+		float* pHP = mem.get_pointer<float>(offsets.ActorHP);
+		float* pWeight = mem.get_pointer<float>(offsets.ActorWeight);
+		float* pCrosshairDelayInfo = mem.get_pointer<float>(offsets.ActorCrosshairDelayInfo);
+
+		const char* pActorName = mem.get_pointer<const char>(offsets.ActorName);
+
+		int* pCrosshair = mem.get_pointer<int>(offsets.ActorCrosshairTargetExists);
+		int* pTargetType = mem.get_pointer<int>(offsets.ActorCrosshairTargetType);
 		int* pMoney = mem.get_pointer<int>(offsets.ActorMoney);
-		const char* name = mem.get_pointer<const char>(offsets.ActorName);
-		float* pCrosshair = mem.get_pointer<float>(CrosshairTargetExists, "xrEngine.exe");
-		float* pCrosshairInfo = mem.get_pointer<float>(CrosshairDelayInfo, "xrEngine.exe");
+
+
 
 		if (pStamina)
 			*pStamina = 1;
@@ -34,15 +37,16 @@ void WINAPI Main(HMODULE hModule)
 
 		if (pCrosshair)
 		{
-			if (*pCrosshair && GetForegroundWindowName() == "xrEngine.exe")
+			if (pTargetType &&
+				(*pTargetType == TargetType::Alive && GetForegroundWindowName() == "xrEngine.exe"))
 			{
 				mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
 				mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
 			}
 		}
 
-		if (pCrosshairInfo)
-			*pCrosshairInfo = 1;
+		if (pCrosshairDelayInfo)
+			*pCrosshairDelayInfo = 1;
 
 		Sleep(1);
 	}
@@ -60,11 +64,11 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call,
 		HANDLE hThread = CreateThread(nullptr, 0, reinterpret_cast<LPTHREAD_START_ROUTINE>(Main),
 			hModule, 0, nullptr);
 
-			if (!hThread)
-			{
-				MessageBox(nullptr, "Can't create the thread", nullptr, MB_ICONERROR);
-				return -1;
-			}
+		if (!hThread)
+		{
+			MessageBox(nullptr, "Can't create the thread", nullptr, MB_ICONERROR);
+			return -1;
+		}
 		SafeCloseHandle(hThread);
 	}
 	}

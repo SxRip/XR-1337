@@ -175,13 +175,15 @@
     <ClInclude Include="include\handles.hpp" />
     <ClInclude Include="include\processes.hpp" />
     <ClInclude Include="Memory.hpp" />
+    <ClInclude Include="offsets\interfaces.hpp" />
+    <ClInclude Include="offsets\offsets.hpp" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="include\handles.cpp" />
+    <ClCompile Include="include\Memory.cpp" />
     <ClCompile Include="include\processes.cpp" />
-    <ClCompile Include="Memory.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
