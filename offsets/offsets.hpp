@@ -54,6 +54,11 @@ struct CHUDManagerNET : CHUDManager
 	}
 };
 
+/*
+* TODO: сделать доступ к оффсетам по разделенным классам
+* что-то типо обращения к оффсету по: Actor.Money
+*/
+
 class Offsets
 {
 public:
