@@ -31,6 +31,11 @@ struct CActorMPNET : CActorMP
 		Inventory.Base = 0;
 		Inventory.ActorInventory.Base = 0x2E4;
 		Inventory.ActorInventory.Weight = 0x5C;
+
+		//!using something in the weapon class doesn't need past Actor BASE
+		//!just paste the weapon base.
+		Weapon.Base = 0x6F0C74;
+		Weapon.CurrentWeapon = 0x14;
 	}
 };
 
@@ -96,7 +101,7 @@ public:
 	std::pair<std::vector<DWORD>, IOffsetBase*>ActorStamina, ActorHP,
 		ActorCrosshairTargetExists, ActorCrosshairTargetType,
 		ActorMoney, ActorWeight, ActorName, ActorCrosshairTargetIsAlive,
-		ActorCrosshairDelayInfo;
+		ActorCrosshairDelayInfo, ActorIsWeaponInHands;
 private:
 	
 	void _initOffsets() noexcept
@@ -117,12 +122,9 @@ private:
 
 		ActorCrosshairDelayInfo = { {_HudManager->Base, _HudManager->Crosshair.Base, 
 			_HudManager->Crosshair.DelayInfo},_HudManager };
+
+		ActorIsWeaponInHands = { {_Actor->Weapon.Base, _Actor->Weapon.CurrentWeapon}, _Actor };
 	}
-
-	enum Game
-	{
-
-	};
 
 	CActorMP* _Actor;
 	CActorMPNET _ActorNET;

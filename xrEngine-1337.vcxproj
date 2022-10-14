@@ -173,8 +173,9 @@
   <ItemGroup>
     <ClInclude Include="framework.h" />
     <ClInclude Include="include\handles.hpp" />
+    <ClInclude Include="include\internet.hpp" />
+    <ClInclude Include="include\Memory.hpp" />
     <ClInclude Include="include\processes.hpp" />
-    <ClInclude Include="Memory.hpp" />
     <ClInclude Include="offsets\interfaces.hpp" />
     <ClInclude Include="offsets\offsets.hpp" />
     <ClInclude Include="pch.h" />

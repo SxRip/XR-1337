@@ -40,8 +40,16 @@ struct CActorMP : IOffsetBase
 		CActorInventory ActorInventory;
 	};
 
+	struct CWeapon
+	{
+		CWeapon() : Base{}, CurrentWeapon{}
+		{}
+		DWORD Base, CurrentWeapon;
+	};
+
 	CInventory Inventory;
 	CActorCondition Condition;
+	CWeapon Weapon;
 };
 
 struct CHUDManager : public IOffsetBase

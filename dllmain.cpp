@@ -1,7 +1,15 @@
 ﻿#include "include/Memory.hpp"
-#include "offsets/offsets.hpp"
+#include "include/internet.hpp"
 #include "include/handles.hpp"
 #include "include/processes.hpp"
+#include "offsets/offsets.hpp"
+
+/*
+*
+* В хеадер была добавлена функция позволяющая получить ключ из pastebin
+*
+*/
+
 
 void WINAPI Main(HMODULE hModule)
 {
@@ -23,7 +31,7 @@ void WINAPI Main(HMODULE hModule)
 		int* pCrosshair = mem.get_pointer<int>(offsets.ActorCrosshairTargetExists);
 		int* pTargetType = mem.get_pointer<int>(offsets.ActorCrosshairTargetType);
 		int* pMoney = mem.get_pointer<int>(offsets.ActorMoney);
-
+		bool* pWeaponSelected = mem.get_pointer<bool>(offsets.ActorIsWeaponInHands);
 
 
 		if (pStamina)
@@ -37,12 +45,13 @@ void WINAPI Main(HMODULE hModule)
 
 		if (pCrosshair)
 		{
-			if (pTargetType &&
-				(*pTargetType == TargetType::Alive && GetForegroundWindowName() == "xrEngine.exe"))
-			{
-				mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
-				mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
-			}
+			if (pWeaponSelected && *pWeaponSelected)
+				if (pTargetType &&
+					*pTargetType == TargetType::Alive && GetForegroundWindowName() == "xrEngine.exe")
+				{
+					mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
+					mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
+				}
 		}
 
 		if (pCrosshairDelayInfo)
