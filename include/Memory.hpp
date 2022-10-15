@@ -22,10 +22,8 @@ public:
 				continue;
 
 			if (i == _Offsets.size() - 1)
-			{
-				pointer = reinterpret_cast<_Ptr_value_type*>(dwClientBase + _Offsets[i]);
-				return pointer ? pointer : nullptr;
-			}
+				return reinterpret_cast<_Ptr_value_type*>(dwClientBase + _Offsets[i]);
+
 			dwClientBase = *reinterpret_cast<DWORD*>(dwClientBase + _Offsets[i]);
 
 			if (!dwClientBase)

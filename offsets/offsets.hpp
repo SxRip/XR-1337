@@ -54,35 +54,32 @@ struct CHUDManagerNET : CHUDManager
 	}
 };
 
-/*
-* TODO: сделать доступ к оффсетам по разделенным классам
-* что-то типо обращения к оффсету по: Actor.Money
-*/
-
 class Offsets
 {
+private:
+	using pair_offsets_vector_baseoffset = std::pair<std::vector<DWORD>, IOffsetBase*>;
+
+	class CActor
+	{
+	private:
+		struct CCrosshair
+		{
+			pair_offsets_vector_baseoffset DelayInfo, TargetIsAlive, TargetType, TargetExists;
+		};
+
+		struct CWeapon
+		{
+			pair_offsets_vector_baseoffset IsInHands;
+		};
+
+	public:
+
+		CWeapon Weapon;
+		CCrosshair Crosshair;
+		pair_offsets_vector_baseoffset HP, Stamina, Money, Weight, Name;
+	};
+
 public:
-	Offsets() = default;
-	//Offsets()
-	//	/*_NETStamina{ _Actor->Base, _Actor->Condition.Base, _Actor->Condition.Stamina}*/
-	//	/*_NETHP{ _Actor->Base, _Actor->Condition.Base, _Actor->Condition.HP },
-	//	_NETActorName{ _Actor->Base, _Actor->Name },
-	//	_NETCrosshairTargetExists{ CHUDManager::Base, CHUDManager::Crosshair, CHUDManager::CrossTarget },
-	//	_NETCrosshairTargetType{ CHUDManager::Base, CHUDManager::Crosshair, CHUDManager::CrossTarget, CHUDManager::CrossTargetType },
-	//	_NETInventoryMoney{ _Actor->Base, _Actor->Money },
-	//	_NETInventoryWeight{ Inventory::Base, Inventory::ActorInventory, Inventory::ActorWeight },
-	//	_NETCrosshairTargetIsAlive{ CHUDManager::Base, CHUDManager::Crosshair, CHUDManager::CrossTarget, CHUDManager::CrossTargetType }*/
-	//{
-	//	ActorStamina = _NETStamina;
-	//	ActorHP = _NETHP;
-	//	ActorCrosshairTargetExists = _NETCrosshairTargetExists;
-	//	ActorCrosshairTargetType = _NETCrosshairTargetType;
-	//	ActorMoney = _NETInventoryMoney;
-	//	ActorWeight = _NETInventoryWeight;
-	//	ActorName = _NETActorName;
-	//	ActorCrosshairDelayInfo = _NETCrosshairDelayInfo;
-	//	ActorCrosshairTargetType = _NETCrosshairTargetType;
-	//}
 
 	Offsets(MOD _Platform)
 	{
@@ -103,32 +100,29 @@ public:
 		_initOffsets();
 	}
 
-	std::pair<std::vector<DWORD>, IOffsetBase*>ActorStamina, ActorHP,
-		ActorCrosshairTargetExists, ActorCrosshairTargetType,
-		ActorMoney, ActorWeight, ActorName, ActorCrosshairTargetIsAlive,
-		ActorCrosshairDelayInfo, ActorIsWeaponInHands;
+	CActor Actor;
 private:
-	
+
 	void _initOffsets() noexcept
 	{
-		ActorStamina = { { _Actor->Base, _Actor->Condition.Base, _Actor->Condition.Stamina }, _Actor };
-		ActorHP = { { _Actor->Base, _Actor->Condition.Base, _Actor->Condition.HP }, _Actor };
-		ActorName = { {_Actor->Base, _Actor->Name}, _Actor };
-		ActorMoney = { {_Actor->Base, _Actor->Money}, _Actor };
+		Actor.Stamina = { { _Actor->Base, _Actor->Condition.Base, _Actor->Condition.Stamina }, _Actor };
+		Actor.HP = { { _Actor->Base, _Actor->Condition.Base, _Actor->Condition.HP }, _Actor };
+		Actor.Name = { {_Actor->Base, _Actor->Name}, _Actor };
+		Actor.Money = { {_Actor->Base, _Actor->Money}, _Actor };
 
-		ActorWeight = { {_Actor->Base, _Actor->Inventory.Base,
+		Actor.Weight = { {_Actor->Base, _Actor->Inventory.Base,
 			_Actor->Inventory.ActorInventory.Base, _Actor->Inventory.ActorInventory.Weight}, _Actor };
 
-		ActorCrosshairTargetExists = { {_HudManager->Base, _HudManager->Crosshair.Base,
+		Actor.Crosshair.TargetExists = { {_HudManager->Base, _HudManager->Crosshair.Base,
+			_HudManager->Crosshair.Target.Base, _HudManager->Crosshair.Target.Base}, _HudManager };
+
+		Actor.Crosshair.TargetType = { {_HudManager->Base, _HudManager->Crosshair.Base,
 			_HudManager->Crosshair.Target.Base, _HudManager->Crosshair.Target.Type}, _HudManager };
 
-		ActorCrosshairTargetType = { {_HudManager->Base, _HudManager->Crosshair.Base,
-			_HudManager->Crosshair.Target.Base, _HudManager->Crosshair.Target.Type}, _HudManager };
-
-		ActorCrosshairDelayInfo = { {_HudManager->Base, _HudManager->Crosshair.Base, 
+		Actor.Crosshair.DelayInfo = { {_HudManager->Base, _HudManager->Crosshair.Base, 
 			_HudManager->Crosshair.DelayInfo},_HudManager };
 
-		ActorIsWeaponInHands = { {_Actor->Weapon.Base, _Actor->Weapon.CurrentWeapon}, _Actor };
+		Actor.Weapon.IsInHands = { {_Actor->Weapon.Base, _Actor->Weapon.CurrentWeapon}, _Actor };
 	}
 
 	CActorMP* _Actor;
@@ -136,60 +130,7 @@ private:
 
 	CHUDManager* _HudManager;
 	CHUDManagerNET _HudManagerNET;
-
-	/*enum CHUDManager
-	{
-		Base = 0x992D4,
-
-		Crosshair = 0x4C,
-		CrossDelayInfo = 0x4,
-		CrossTarget = 0x8,
-		CrossTargetType = 0x14,
-
-	};
-
-	enum TargetType
-	{
-		Alive = 29,
-		Static = 13,
-	};
-
-	enum Inventory
-	{
-		Base = 0x6ECC04,
-
-		ActorInventory = 0x2E4,
-		ActorWeight = 0x5C
-	};*/
 };
-
-#define oActorCondition 0x9D8
-#define oCActorMP 0x6ECC04 
-#define oCrosshair 0x992D4
-
-#define oZ 1
-#define oY 1
-#define oX 1
-
-//CActorCondition
-#define oHP 0x4
-//#define oStamina 0x114
-
-//CInventory
-#define oMoney 0x24
-#define oWeight 0x5C
-
-//GlobalVars
-#define oResX 1
-#define oResY 1
-
-//Crosshair
-#define oCrosshairObj 0x8
-#define oTargetType 0x14
-#define oCrossLong 1
-#define oCrossSkelet 1
-#define oCrossShowInfoDelay 1
-#define oPlayerState 1
 
 
 /*/////////////////////soProject/////////////////////////
