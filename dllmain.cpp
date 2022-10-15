@@ -21,17 +21,16 @@ void WINAPI Main(HMODULE hModule)
 		if (GetAsyncKeyState(VK_END))
 			break;
 
-		float* pStamina = mem.get_pointer<float>(offsets.ActorStamina);
-		float* pHP = mem.get_pointer<float>(offsets.ActorHP);
-		float* pWeight = mem.get_pointer<float>(offsets.ActorWeight);
-		float* pCrosshairDelayInfo = mem.get_pointer<float>(offsets.ActorCrosshairDelayInfo);
+		float* pStamina = mem.get_pointer<float>(offsets.Actor.Stamina);
+		float* pHP = mem.get_pointer<float>(offsets.Actor.HP);
+		float* pWeight = mem.get_pointer<float>(offsets.Actor.Weight);
+		float* pCrosshairDelayInfo = mem.get_pointer<float>(offsets.Actor.Crosshair.DelayInfo);
+	
+		const char* pActorName = mem.get_pointer<const char>(offsets.Actor.Name);
 
-		const char* pActorName = mem.get_pointer<const char>(offsets.ActorName);
-
-		int* pCrosshair = mem.get_pointer<int>(offsets.ActorCrosshairTargetExists);
-		int* pTargetType = mem.get_pointer<int>(offsets.ActorCrosshairTargetType);
-		int* pMoney = mem.get_pointer<int>(offsets.ActorMoney);
-		bool* pWeaponSelected = mem.get_pointer<bool>(offsets.ActorIsWeaponInHands);
+		int* pTargetType = mem.get_pointer<int>(offsets.Actor.Crosshair.TargetType);
+		int* pMoney = mem.get_pointer<int>(offsets.Actor.Money);
+		bool* pWeaponSelected = mem.get_pointer<bool>(offsets.Actor.Weapon.IsInHands);
 
 
 		if (pStamina)
@@ -43,21 +42,17 @@ void WINAPI Main(HMODULE hModule)
 		if (pMoney)
 			*pMoney = 100000;
 
-		if (pCrosshair)
-		{
-			if (pWeaponSelected && *pWeaponSelected)
-				if (pTargetType &&
-					*pTargetType == TargetType::Alive && GetForegroundWindowName() == "xrEngine.exe")
-				{
-					mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
-					mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
-				}
-		}
+
+		if (pWeaponSelected && *pWeaponSelected)
+			if (pTargetType &&
+				*pTargetType == TargetType::Alive && GetForegroundWindowName() == "xrEngine.exe")
+			{
+				mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
+				mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
+			}
 
 		if (pCrosshairDelayInfo)
 			*pCrosshairDelayInfo = 1;
-
-		Sleep(1);
 	}
 
 	FreeLibraryAndExitThread(hModule, 0);
