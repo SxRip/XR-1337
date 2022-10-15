@@ -2,6 +2,23 @@
 #include "offsets/offsets.hpp"
 #include <Windows.h>
 
+template <class _Ptr_value_type>
+class _Offset_Ptr
+{
+public:
+
+	template<class value_type>
+	void operator=(const value_type _val)
+	{
+		if (_ptr)
+			if (*_ptr)
+				*_ptr = _val;
+	}
+
+private:
+	_Ptr_value_type* _ptr;
+};
+
 class Memory
 {
 public:
@@ -31,12 +48,6 @@ public:
 		}
 		return nullptr;
 	}
-
-	//template <class _Ptr_value_type, class _Collection, class _OffsetObject>
-	//_Ptr_value_type* get_pointer(const _Collection& _Offsets, const _OffsetObject& _Obj)
-	//{
-	//	return get_pointer<_Ptr_value_type>(_Offsets, _Obj.get_module());
-	//}
 
 	template <class _Ptr_value_type>
 	_Ptr_value_type* get_pointer(const std::pair<std::vector<DWORD>, IOffsetBase*>& _Offsets)
