@@ -7,12 +7,43 @@ class _Offset_Ptr
 {
 public:
 
-	template<class value_type>
-	void operator=(const value_type _val)
+	_Offset_Ptr() : _ptr{}
+	{}
+
+	_Offset_Ptr(const _Offset_Ptr& ptr) : _ptr{ ptr._ptr }
+	{}
+
+	_Offset_Ptr(_Ptr_value_type* ptr)
+		: _ptr{ ptr }
+	{}
+
+	inline _Ptr_value_type* get_ptr() const noexcept { return _ptr; }
+
+
+	inline void operator=(_Ptr_value_type _val)
 	{
 		if (_ptr)
-			if (*_ptr)
-				*_ptr = _val;
+			*_ptr = _val;
+	}
+
+	inline bool operator==(_Ptr_value_type _val)
+	{
+		if (_ptr)
+			return *_ptr == _val;
+		return false;
+	}
+
+	inline bool operator==(const _Offset_Ptr& _offsetObj)
+	{
+		return _offsetObj._ptr == _ptr;
+	}
+
+	//checking if the pointer of bool type has true
+	inline operator bool() const
+	{
+		if (_ptr)
+			return *_ptr >= 1;
+		return false;
 	}
 
 private:
@@ -22,7 +53,7 @@ private:
 class Memory
 {
 public:
-
+	using pair_offsets_vector_baseoffset = std::pair<std::vector<DWORD>, IOffsetBase*>;
 	template <class _Ptr_value_type, class _Collection>
 	_Ptr_value_type* get_pointer(const _Collection& _Offsets, const char* _Module = nullptr)
 	{
@@ -50,7 +81,7 @@ public:
 	}
 
 	template <class _Ptr_value_type>
-	_Ptr_value_type* get_pointer(const std::pair<std::vector<DWORD>, IOffsetBase*>& _Offsets)
+	_Offset_Ptr<_Ptr_value_type> get_pointer(const pair_offsets_vector_baseoffset& _Offsets)
 	{
 		return get_pointer<_Ptr_value_type>(_Offsets.first, _Offsets.second->get_module());
 	}

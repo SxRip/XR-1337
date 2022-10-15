@@ -21,38 +21,32 @@ void WINAPI Main(HMODULE hModule)
 		if (GetAsyncKeyState(VK_END))
 			break;
 
-		float* pStamina = mem.get_pointer<float>(offsets.Actor.Stamina);
-		float* pHP = mem.get_pointer<float>(offsets.Actor.HP);
-		float* pWeight = mem.get_pointer<float>(offsets.Actor.Weight);
-		float* pCrosshairDelayInfo = mem.get_pointer<float>(offsets.Actor.Crosshair.DelayInfo);
+		_Offset_Ptr<float> pStamina = mem.get_pointer<float>(offsets.Actor.Stamina);
+		_Offset_Ptr<float> pHP = mem.get_pointer<float>(offsets.Actor.HP);
+		_Offset_Ptr<float> pWeight = mem.get_pointer<float>(offsets.Actor.Weight);
+		_Offset_Ptr<float> pCrosshairDelayInfo = mem.get_pointer<float>(offsets.Actor.Crosshair.DelayInfo);
+
+		_Offset_Ptr<const char> pActorName = mem.get_pointer<const char>(offsets.Actor.Name);
+
+		_Offset_Ptr<int> pTargetType = mem.get_pointer<int>(offsets.Actor.Crosshair.TargetType);
+		_Offset_Ptr<int> pMoney = mem.get_pointer<int>(offsets.Actor.Money);
+
+		_Offset_Ptr<bool> pWeaponSelected = mem.get_pointer<bool>(offsets.Actor.Weapon.IsInHands);
+
+		pStamina = 1;
 	
-		const char* pActorName = mem.get_pointer<const char>(offsets.Actor.Name);
+		pWeight = 0;
 
-		int* pTargetType = mem.get_pointer<int>(offsets.Actor.Crosshair.TargetType);
-		int* pMoney = mem.get_pointer<int>(offsets.Actor.Money);
-		bool* pWeaponSelected = mem.get_pointer<bool>(offsets.Actor.Weapon.IsInHands);
-
-
-		if (pStamina)
-			*pStamina = 1;
-
-		if (pWeight)
-			*pWeight = 0;
-
-		if (pMoney)
-			*pMoney = 100000;
-
-
-		if (pWeaponSelected && *pWeaponSelected)
-			if (pTargetType &&
-				*pTargetType == TargetType::Alive && GetForegroundWindowName() == "xrEngine.exe")
+		pMoney = 100000;
+		
+		if (pWeaponSelected)
+			if (pTargetType == TargetType::Alive && GetForegroundWindowName() == "xrEngine.exe")
 			{
 				mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
 				mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
 			}
 
-		if (pCrosshairDelayInfo)
-			*pCrosshairDelayInfo = 1;
+		pCrosshairDelayInfo = 1;
 	}
 
 	FreeLibraryAndExitThread(hModule, 0);
