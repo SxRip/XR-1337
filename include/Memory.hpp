@@ -42,7 +42,7 @@ public:
 	inline operator bool() const
 	{
 		if (_ptr)
-			return *_ptr >= 1;
+			return *_ptr != 0;
 		return false;
 	}
 
