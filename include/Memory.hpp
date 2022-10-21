@@ -7,35 +7,37 @@ class _Offset_Ptr
 {
 public:
 
-	_Offset_Ptr() : _ptr{}
-	{}
+	_Offset_Ptr() : _ptr{} {}
 
-	_Offset_Ptr(const _Offset_Ptr& ptr) : _ptr{ ptr._ptr }
-	{}
+	_Offset_Ptr(const _Offset_Ptr&& ptr) : _ptr{ ptr._ptr } {}
+	_Offset_Ptr(const _Offset_Ptr& ptr) : _ptr{ ptr._ptr } {}
 
-	_Offset_Ptr(_Ptr_value_type* ptr)
-		: _ptr{ ptr }
-	{}
+	_Offset_Ptr(_Ptr_value_type* ptr) : _ptr{ ptr } {}
 
-	inline _Ptr_value_type* get_ptr() const noexcept { return _ptr; }
-
-
-	inline void operator=(_Ptr_value_type _val)
+	inline _Offset_Ptr& operator=(_Ptr_value_type _Val)
 	{
 		if (_ptr)
-			*_ptr = _val;
+			*_ptr = _Val;
+		return *this;
 	}
 
-	inline bool operator==(_Ptr_value_type _val)
+	//!use only with the same type of a pointer.
+	inline _Offset_Ptr& operator=(const _Offset_Ptr& _Ptr)
+	{
+		_ptr = _Ptr._ptr;
+		return *this;
+	}
+
+	inline bool operator==(_Ptr_value_type _Val)
 	{
 		if (_ptr)
-			return *_ptr == _val;
+			return *_ptr == _Val;
 		return false;
 	}
 
-	inline bool operator==(const _Offset_Ptr& _offsetObj)
+	inline bool operator==(const _Offset_Ptr& _OffsetObj)
 	{
-		return _offsetObj._ptr == _ptr;
+		return _OffsetObj._ptr == _ptr;
 	}
 
 	//checking if a pointer of bool type has true
