@@ -46,6 +46,8 @@ public:
 		return false;
 	}
 
+	inline _Ptr_value_type& operator*() const { return *_ptr; }
+
 private:
 	_Ptr_value_type* _ptr;
 };

@@ -33,7 +33,7 @@ struct CActorMPNET : CActorMP
 		Inventory.ActorInventory.Weight = 0x5C;
 
 		CameraManager.Base = 0x5A0;
-		CameraManager.Zoom = 0x34;
+		CameraManager.Fov = 0x34;
 
 		//!using something in the weapon class doesn't need past Actor BASE
 		//!just paste the weapon base.
@@ -77,7 +77,7 @@ private:
 
 		struct CActorCameraManager
 		{
-			pair_offsets_vector_baseoffset Zoom;
+			pair_offsets_vector_baseoffset Fov;
 		};
 
 	public:
@@ -131,7 +131,7 @@ private:
 			_HudManager->Crosshair.DelayInfo},_HudManager };
 
 		Actor.Weapon.IsInHands = { {_Actor->Weapon.Base, _Actor->Weapon.CurrentWeapon}, _Actor };
-		Actor.Camera.Zoom = { {_Actor->Base, _Actor->CameraManager.Base, _Actor->CameraManager.Zoom}, _Actor };
+		Actor.Camera.Fov = { {_Actor->Base, _Actor->CameraManager.Base, _Actor->CameraManager.Fov}, _Actor };
 
 	}
 

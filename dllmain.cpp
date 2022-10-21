@@ -3,7 +3,7 @@
 #include "include/handles.hpp"
 #include "include/processes.hpp"
 #include "offsets/offsets.hpp"
-
+#include <memory>
 
 void WINAPI Main(HMODULE hModule)
 {
@@ -19,7 +19,7 @@ void WINAPI Main(HMODULE hModule)
 		_Offset_Ptr<float> pHP = mem.get_pointer<float>(offsets.Actor.HP);
 		_Offset_Ptr<float> pWeight = mem.get_pointer<float>(offsets.Actor.Weight);
 		_Offset_Ptr<float> pCrosshairDelayInfo = mem.get_pointer<float>(offsets.Actor.Crosshair.DelayInfo);
-		_Offset_Ptr<float> pCrosshairZoom = mem.get_pointer<float>(offsets.Actor.Camera.Zoom);
+		_Offset_Ptr<float> pFov = mem.get_pointer<float>(offsets.Actor.Camera.Fov);
 
 		_Offset_Ptr<const char> pActorName = mem.get_pointer<const char>(offsets.Actor.Name);
 
@@ -29,20 +29,17 @@ void WINAPI Main(HMODULE hModule)
 		_Offset_Ptr<bool> pWeaponSelected = mem.get_pointer<bool>(offsets.Actor.Weapon.IsInHands);
 
 		pStamina = 1;
-	
+
 		pWeight = 0;
 
 		pMoney = 100000;
-		
+
 		if (pWeaponSelected)
 			if (pTargetType == TargetType::Alive && GetForegroundWindowName() == "xrEngine.exe")
 			{
 				mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
 				mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
 			}
-
-		if (GetAsyncKeyState(VK_OEM_PLUS))
-			++pCrosshairZoom;
 
 		pCrosshairDelayInfo = 1;
 	}

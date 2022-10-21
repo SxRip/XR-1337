@@ -27,9 +27,9 @@ struct CActorMP : IOffsetBase
 
 	struct CActorCameraManager
 	{
-		CActorCameraManager() : Base{}, Zoom{} {};
+		CActorCameraManager() : Base{}, Fov{} {};
 
-		DWORD Base, Zoom;
+		DWORD Base, Fov;
 	};
 
 	struct CInventory
