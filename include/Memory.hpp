@@ -38,7 +38,7 @@ public:
 		return _offsetObj._ptr == _ptr;
 	}
 
-	//checking if the pointer of bool type has true
+	//checking if a pointer of bool type has true
 	inline operator bool() const
 	{
 		if (_ptr)
@@ -62,7 +62,6 @@ public:
 
 		DWORD dwClientBase =
 			reinterpret_cast<DWORD>(GetModuleHandle(_Module ? _Module : "xrGame.dll"));
-		_Ptr_value_type* pointer = nullptr;
 
 		for (size_t i = 0; i < _Offsets.size(); ++i)
 		{

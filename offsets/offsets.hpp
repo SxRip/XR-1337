@@ -32,6 +32,9 @@ struct CActorMPNET : CActorMP
 		Inventory.ActorInventory.Base = 0x2E4;
 		Inventory.ActorInventory.Weight = 0x5C;
 
+		CameraManager.Base = 0x5A0;
+		CameraManager.Zoom = 0x34;
+
 		//!using something in the weapon class doesn't need past Actor BASE
 		//!just paste the weapon base.
 		Weapon.Base = 0x6F0C74;
@@ -72,8 +75,13 @@ private:
 			pair_offsets_vector_baseoffset IsInHands;
 		};
 
-	public:
+		struct CActorCameraManager
+		{
+			pair_offsets_vector_baseoffset Zoom;
+		};
 
+	public:
+		CActorCameraManager Camera;
 		CWeapon Weapon;
 		CCrosshair Crosshair;
 		pair_offsets_vector_baseoffset HP, Stamina, Money, Weight, Name;
@@ -119,10 +127,12 @@ private:
 		Actor.Crosshair.TargetType = { {_HudManager->Base, _HudManager->Crosshair.Base,
 			_HudManager->Crosshair.Target.Base, _HudManager->Crosshair.Target.Type}, _HudManager };
 
-		Actor.Crosshair.DelayInfo = { {_HudManager->Base, _HudManager->Crosshair.Base, 
+		Actor.Crosshair.DelayInfo = { {_HudManager->Base, _HudManager->Crosshair.Base,
 			_HudManager->Crosshair.DelayInfo},_HudManager };
 
 		Actor.Weapon.IsInHands = { {_Actor->Weapon.Base, _Actor->Weapon.CurrentWeapon}, _Actor };
+		Actor.Camera.Zoom = { {_Actor->Base, _Actor->CameraManager.Base, _Actor->CameraManager.Zoom}, _Actor };
+
 	}
 
 	CActorMP* _Actor;

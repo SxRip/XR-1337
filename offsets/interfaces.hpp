@@ -25,6 +25,13 @@ struct CActorMP : IOffsetBase
 		DWORD Base, HP, Stamina;
 	};
 
+	struct CActorCameraManager
+	{
+		CActorCameraManager() : Base{}, Zoom{} {};
+
+		DWORD Base, Zoom;
+	};
+
 	struct CInventory
 	{
 		CInventory() : Base{}, ActorInventory{} {}
@@ -50,6 +57,7 @@ struct CActorMP : IOffsetBase
 	CInventory Inventory;
 	CActorCondition Condition;
 	CWeapon Weapon;
+	CActorCameraManager CameraManager;
 };
 
 struct CHUDManager : public IOffsetBase

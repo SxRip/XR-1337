@@ -4,12 +4,6 @@
 #include "include/processes.hpp"
 #include "offsets/offsets.hpp"
 
-/*
-*
-* В хеадер была добавлена функция позволяющая получить ключ из pastebin
-*
-*/
-
 
 void WINAPI Main(HMODULE hModule)
 {
@@ -25,6 +19,7 @@ void WINAPI Main(HMODULE hModule)
 		_Offset_Ptr<float> pHP = mem.get_pointer<float>(offsets.Actor.HP);
 		_Offset_Ptr<float> pWeight = mem.get_pointer<float>(offsets.Actor.Weight);
 		_Offset_Ptr<float> pCrosshairDelayInfo = mem.get_pointer<float>(offsets.Actor.Crosshair.DelayInfo);
+		_Offset_Ptr<float> pCrosshairZoom = mem.get_pointer<float>(offsets.Actor.Camera.Zoom);
 
 		_Offset_Ptr<const char> pActorName = mem.get_pointer<const char>(offsets.Actor.Name);
 
@@ -45,6 +40,9 @@ void WINAPI Main(HMODULE hModule)
 				mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
 				mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
 			}
+
+		if (GetAsyncKeyState(VK_OEM_PLUS))
+			++pCrosshairZoom;
 
 		pCrosshairDelayInfo = 1;
 	}
