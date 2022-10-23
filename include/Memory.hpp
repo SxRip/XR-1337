@@ -28,16 +28,16 @@ public:
 		return *this;
 	}
 
-	inline bool operator==(_Ptr_value_type _Val)
+	inline bool operator==(_Ptr_value_type _Val) const
 	{
 		if (_ptr)
 			return *_ptr == _Val;
 		return false;
 	}
 
-	inline bool operator==(const _Offset_Ptr& _OffsetObj)
+	inline bool operator==(const _Offset_Ptr& _Ptr) const noexcept
 	{
-		return _OffsetObj._ptr == _ptr;
+		return _Ptr._ptr == _ptr;
 	}
 
 	//checking if a pointer of bool type has true
@@ -67,6 +67,9 @@ public:
 		DWORD dwClientBase =
 			reinterpret_cast<DWORD>(GetModuleHandle(_Module ? _Module : "xrGame.dll"));
 
+		if (!dwClientBase)
+			return nullptr;
+
 		for (size_t i = 0; i < _Offsets.size(); ++i)
 		{
 			if (_Offsets[i] == 0)
@@ -84,8 +87,8 @@ public:
 	}
 
 	template <class _Ptr_value_type>
-	_Offset_Ptr<_Ptr_value_type> get_pointer(const pair_offsets_vector_baseoffset& _Offsets)
+	_Offset_Ptr<_Ptr_value_type> get_pointer(const pair_offsets_vector_baseoffset& _Pair)
 	{
-		return get_pointer<_Ptr_value_type>(_Offsets.first, _Offsets.second->get_module());
+		return get_pointer<_Ptr_value_type>(_Pair.first, _Pair.second->get_module());
 	}
 };
