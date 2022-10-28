@@ -29,7 +29,7 @@ struct CActorMP : IOffsetBase
 	{
 		CActorCameraManager() : Base{}, Fov{} {};
 
-		DWORD Base, Fov;
+		DWORD Base, Fov, MatrixStart = 0xC8;
 	};
 
 	struct CInventory
@@ -54,6 +54,12 @@ struct CActorMP : IOffsetBase
 		DWORD Base, CurrentWeapon;
 	};
 
+	struct CPosition : CActorCameraManager
+	{
+		DWORD x, y, z;
+	};
+
+	CPosition Position;
 	CInventory Inventory;
 	CActorCondition Condition;
 	CWeapon Weapon;
@@ -72,7 +78,7 @@ struct CHUDManager : public IOffsetBase
 
 		struct Target
 		{
-			Target() : Base{}, Type {}
+			Target() : Base{}, Type{}
 			{}
 
 			DWORD Base, Type;

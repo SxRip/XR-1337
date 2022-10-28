@@ -28,6 +28,20 @@ public:
 		return *this;
 	}
 
+	inline _Offset_Ptr& operator+=(_Ptr_value_type _Val)
+	{
+		if (_ptr)
+			*_ptr += _Val;
+		return *this;
+	}
+
+	inline _Offset_Ptr& operator-=(_Ptr_value_type _Val)
+	{
+		if (_ptr)
+			*_ptr -= _Val;
+		return *this;
+	}
+
 	inline bool operator==(_Ptr_value_type _Val) const
 	{
 		if (_ptr)
@@ -40,7 +54,7 @@ public:
 		return _Ptr._ptr == _ptr;
 	}
 
-	//checking if a pointer of bool type has true
+	//checking if a value of a bool pointer type has true
 	inline operator bool() const
 	{
 		if (_ptr)

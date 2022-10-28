@@ -3,23 +3,24 @@
 #include "include/handles.hpp"
 #include "include/processes.hpp"
 #include "offsets/offsets.hpp"
-#include <memory>
 
 void WINAPI Main(HMODULE hModule)
 {
 	Offsets offsets(MOD::StalkerNET);
 	Memory mem;
 
-	while (true)
+	while (!GetAsyncKeyState(VK_END))
 	{
-		if (GetAsyncKeyState(VK_END))
-			break;
-
 		_Offset_Ptr<float> pStamina = mem.get_pointer<float>(offsets.Actor.Stamina);
 		_Offset_Ptr<float> pHP = mem.get_pointer<float>(offsets.Actor.HP);
 		_Offset_Ptr<float> pWeight = mem.get_pointer<float>(offsets.Actor.Weight);
 		_Offset_Ptr<float> pCrosshairDelayInfo = mem.get_pointer<float>(offsets.Actor.Crosshair.DelayInfo);
 		_Offset_Ptr<float> pFov = mem.get_pointer<float>(offsets.Actor.Camera.Fov);
+
+		/*Added matrix start of a player camera (Exists in ActorCamera (interface))*/
+		_Offset_Ptr<float> pX = mem.get_pointer<float>(offsets.Actor.Position.x);
+		_Offset_Ptr<float> pY = mem.get_pointer<float>(offsets.Actor.Position.y);
+		_Offset_Ptr<float> pZ = mem.get_pointer<float>(offsets.Actor.Position.z);
 
 		_Offset_Ptr<const char> pActorName = mem.get_pointer<const char>(offsets.Actor.Name);
 

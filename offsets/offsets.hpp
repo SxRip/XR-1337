@@ -35,6 +35,11 @@ struct CActorMPNET : CActorMP
 		CameraManager.Base = 0x5A0;
 		CameraManager.Fov = 0x34;
 
+		Position.Base = CameraManager.Base;
+		Position.x = 0xBC;
+		Position.y = 0xC0;
+		Position.z = 0xC4;
+
 		//!using something in the weapon class doesn't need past Actor BASE
 		//!just paste the weapon base.
 		Weapon.Base = 0x6F0C74;
@@ -80,10 +85,16 @@ private:
 			pair_offsets_vector_baseoffset Fov;
 		};
 
+		struct CPosition
+		{
+			pair_offsets_vector_baseoffset x, y, z;
+		};
+
 	public:
 		CActorCameraManager Camera;
 		CWeapon Weapon;
 		CCrosshair Crosshair;
+		CPosition Position;
 		pair_offsets_vector_baseoffset HP, Stamina, Money, Weight, Name;
 	};
 
@@ -133,6 +144,9 @@ private:
 		Actor.Weapon.IsInHands = { {_Actor->Weapon.Base, _Actor->Weapon.CurrentWeapon}, _Actor };
 		Actor.Camera.Fov = { {_Actor->Base, _Actor->CameraManager.Base, _Actor->CameraManager.Fov}, _Actor };
 
+		Actor.Position.x = { {_Actor->Base, _Actor->Position.Base, _Actor->Position.x}, _Actor };
+		Actor.Position.y = { {_Actor->Base, _Actor->Position.Base, _Actor->Position.y}, _Actor };
+		Actor.Position.z = { {_Actor->Base, _Actor->Position.Base, _Actor->Position.z}, _Actor };
 	}
 
 	CActorMP* _Actor;
