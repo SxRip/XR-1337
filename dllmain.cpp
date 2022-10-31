@@ -3,15 +3,16 @@
 #include "include/handles.hpp"
 #include "include/processes.hpp"
 #include "offsets/offsets.hpp"
+#include "stalker_vars.hpp"
 
 void WINAPI Main(HMODULE hModule)
 {
 	Offsets offsets(MOD::StalkerNET);
 	Memory mem;
 
-	_Offset_Ptr<DWORD> StaminaDecInstruction = mem.get_pointer<DWORD>(0xF9461);
+	/*_Offset_Ptr<DWORD> StaminaDecInstruction = mem.get_pointer<DWORD>(0xF9461);
 	if (!mem.nop(StaminaDecInstruction, 6))
-		return;
+		return;*/
 
 	while (!GetAsyncKeyState(VK_END))
 	{
@@ -21,14 +22,15 @@ void WINAPI Main(HMODULE hModule)
 		_Offset_Ptr<float> pCrosshairDelayInfo = mem.get_pointer<float>(offsets.Actor.Crosshair.DelayInfo);
 		_Offset_Ptr<float> pFov = mem.get_pointer<float>(offsets.Actor.Camera.Fov);
 
-		/*Added matrix start of a player camera (Exists in ActorCamera (interface))*/
 		_Offset_Ptr<float> pX = mem.get_pointer<float>(offsets.Actor.Position.x);
 		_Offset_Ptr<float> pY = mem.get_pointer<float>(offsets.Actor.Position.y);
 		_Offset_Ptr<float> pZ = mem.get_pointer<float>(offsets.Actor.Position.z);
 
 		_Offset_Ptr<const char> pActorName = mem.get_pointer<const char>(offsets.Actor.Name);
 
-		_Offset_Ptr<int> pTargetType = mem.get_pointer<int>(offsets.Actor.Crosshair.TargetType);
+		_Offset_Ptr<size_t> pActorFireState = mem.get_pointer<size_t>(offsets.Actor.Crosshair.FireState);
+		_Offset_Ptr<size_t> pTargetType = mem.get_pointer<size_t>(offsets.Actor.Crosshair.target_type);
+
 		_Offset_Ptr<int> pMoney = mem.get_pointer<int>(offsets.Actor.Money);
 
 		_Offset_Ptr<bool> pWeaponSelected = mem.get_pointer<bool>(offsets.Actor.Weapon.IsInHands);
@@ -40,11 +42,12 @@ void WINAPI Main(HMODULE hModule)
 		pMoney = 100000;
 
 		if (pWeaponSelected)
-			if (pTargetType == TargetType::Alive && GetForegroundWindowName() == "xrEngine.exe")
-			{
-				mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
-				mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
-			}
+			if (pTargetType == stalker::target_type::alive && GetForegroundWindowName() == "xrEngine.exe")
+				if (pActorFireState == stalker::fire_state::can_shoot)
+				{
+					mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
+					mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
+				}
 
 		pCrosshairDelayInfo = 1;
 	}

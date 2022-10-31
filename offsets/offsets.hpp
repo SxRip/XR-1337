@@ -10,12 +10,6 @@ enum class MOD
 	StalkerNET
 };
 
-enum TargetType
-{
-	Alive = 29,
-	Static = 13
-};
-
 struct CActorMPNET : CActorMP
 {
 	CActorMPNET()
@@ -62,6 +56,14 @@ struct CHUDManagerNET : CHUDManager
 	}
 };
 
+struct CCrosshairNET : CHUDManagerNET
+{
+	CCrosshairNET()
+	{
+		Base = 0x98030;
+	}
+};
+
 class Offsets
 {
 private:
@@ -72,7 +74,8 @@ private:
 	private:
 		struct CCrosshair
 		{
-			pair_offsets_vector_baseoffset DelayInfo, TargetIsAlive, TargetType, TargetExists;
+			pair_offsets_vector_baseoffset DelayInfo, TargetIsAlive, 
+				target_type, TargetExists, FireState;
 		};
 
 		struct CWeapon
@@ -135,7 +138,7 @@ private:
 		Actor.Crosshair.TargetExists = { {_HudManager->Base, _HudManager->Crosshair.Base,
 			_HudManager->Crosshair.Target.Base, _HudManager->Crosshair.Target.Base}, _HudManager };
 
-		Actor.Crosshair.TargetType = { {_HudManager->Base, _HudManager->Crosshair.Base,
+		Actor.Crosshair.target_type = { {_HudManager->Base, _HudManager->Crosshair.Base,
 			_HudManager->Crosshair.Target.Base, _HudManager->Crosshair.Target.Type}, _HudManager };
 
 		Actor.Crosshair.DelayInfo = { {_HudManager->Base, _HudManager->Crosshair.Base,
@@ -147,6 +150,7 @@ private:
 		Actor.Position.x = { {_Actor->Base, _Actor->Position.Base, _Actor->Position.x}, _Actor };
 		Actor.Position.y = { {_Actor->Base, _Actor->Position.Base, _Actor->Position.y}, _Actor };
 		Actor.Position.z = { {_Actor->Base, _Actor->Position.Base, _Actor->Position.z}, _Actor };
+		Actor.Crosshair.FireState = { {_CrosshairNET.Base}, &_CrosshairNET };
 	}
 
 	CActorMP* _Actor;
@@ -154,6 +158,7 @@ private:
 
 	CHUDManager* _HudManager;
 	CHUDManagerNET _HudManagerNET;
+	CCrosshairNET _CrosshairNET;
 };
 
 

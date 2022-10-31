@@ -175,6 +175,7 @@
     <ClInclude Include="include\internet.hpp" />
     <ClInclude Include="include\Memory.hpp" />
     <ClInclude Include="include\processes.hpp" />
+    <ClInclude Include="stalker_vars.hpp" />
     <ClInclude Include="offsets\interfaces.hpp" />
     <ClInclude Include="offsets\offsets.hpp" />
   </ItemGroup>
