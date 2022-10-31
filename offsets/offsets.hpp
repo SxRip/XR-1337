@@ -116,13 +116,13 @@ public:
 			break;
 		}
 
-		_initOffsets();
+		_Init_offsets();
 	}
 
 	CActor Actor;
 private:
 
-	void _initOffsets() noexcept
+	void _Init_offsets() noexcept
 	{
 		Actor.Stamina = { { _Actor->Base, _Actor->Condition.Base, _Actor->Condition.Stamina }, _Actor };
 		Actor.HP = { { _Actor->Base, _Actor->Condition.Base, _Actor->Condition.HP }, _Actor };

@@ -9,6 +9,10 @@ void WINAPI Main(HMODULE hModule)
 	Offsets offsets(MOD::StalkerNET);
 	Memory mem;
 
+	_Offset_Ptr<DWORD> StaminaDecInstruction = mem.get_pointer<DWORD>(0xF9461);
+	if (!mem.nop(StaminaDecInstruction, 6))
+		return;
+
 	while (!GetAsyncKeyState(VK_END))
 	{
 		_Offset_Ptr<float> pStamina = mem.get_pointer<float>(offsets.Actor.Stamina);
@@ -51,6 +55,9 @@ void WINAPI Main(HMODULE hModule)
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call,
 	LPVOID lpReserved)
 {
+	if (!BypassDebugging())
+		return false;
+
 	switch (ul_reason_for_call)
 	{
 	case DLL_PROCESS_ATTACH:
@@ -67,6 +74,6 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call,
 	}
 	}
 
-	return TRUE;
+	return true;
 }
 
