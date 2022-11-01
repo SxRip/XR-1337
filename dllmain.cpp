@@ -10,9 +10,12 @@ void WINAPI Main(HMODULE hModule)
 	Offsets offsets(MOD::StalkerNET);
 	Memory mem;
 
-	/*_Offset_Ptr<DWORD> StaminaDecInstruction = mem.get_pointer<DWORD>(0xF9461);
-	if (!mem.nop(StaminaDecInstruction, 6))
-		return;*/
+	_Offset_Ptr<DWORD> StaminaRunDecInstruction = mem.get_pointer<DWORD>(stalker::signatures::StaminaRun);
+	_Offset_Ptr<DWORD> StaminaJumpDecInstruction = mem.get_pointer<DWORD>(stalker::signatures::StaminaJump);
+	_Offset_Ptr<DWORD> MoneyInstruction = mem.get_pointer<DWORD>(stalker::signatures::Money);
+
+	mem.nop(StaminaRunDecInstruction, 6);
+	mem.nop(StaminaJumpDecInstruction, 6);
 
 	while (!GetAsyncKeyState(VK_END))
 	{
@@ -39,15 +42,17 @@ void WINAPI Main(HMODULE hModule)
 
 		pWeight = 0;
 
-		pMoney = 100000;
+		if (*pMoney < 1000000)
+			pMoney += 100000;
 
 		if (pWeaponSelected)
-			if (pTargetType == stalker::target_type::alive && GetForegroundWindowName() == "xrEngine.exe")
+			if (pTargetType == stalker::target_type::alive)
 				if (pActorFireState == stalker::fire_state::can_shoot)
-				{
-					mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
-					mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
-				}
+					if (GetForegroundWindowName() == "xrEngine.exe")
+					{
+						mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
+						mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
+					}
 
 		pCrosshairDelayInfo = 1;
 	}

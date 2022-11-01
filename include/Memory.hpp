@@ -2,7 +2,6 @@
 #include "offsets/offsets.hpp"
 #include <Windows.h>
 #include <winternl.h>
-#include <ntstatus.h>
 
 #pragma comment (lib, "ntdll.lib")
 
@@ -14,7 +13,7 @@ PPEB GetCurrentPebProcess()
 	NTSTATUS Ok = NtQueryInformationProcess(GetCurrentProcess(),
 		ProcessBasicInformation, &ProcessInformation, sizeof(PROCESS_BASIC_INFORMATION), &ReturnValue);
 
-	if (Ok != STATUS_SUCCESS || !ProcessInformation.PebBaseAddress)
+	if (Ok || !ProcessInformation.PebBaseAddress)
 		return nullptr;
 
 	return ProcessInformation.PebBaseAddress;

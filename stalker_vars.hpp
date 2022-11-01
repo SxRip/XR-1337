@@ -2,6 +2,13 @@
 
 namespace stalker
 {
+	namespace signatures
+	{
+		constexpr size_t StaminaRun = 0xF9461;
+		constexpr size_t StaminaJump = 0xF93AC;
+		constexpr size_t Money = 0x33D9F6;
+	}
+
 	namespace fire_state
 	{
 		constexpr size_t can_shoot = 7933;
