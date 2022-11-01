@@ -1,12 +1,12 @@
 #pragma once
 
-namespace stalker
+namespace stalkerNET
 {
 	namespace signatures
 	{
-		constexpr size_t StaminaRun = 0xF9461;
-		constexpr size_t StaminaJump = 0xF93AC;
-		constexpr size_t Money = 0x33D9F6;
+		constexpr size_t StaminaRunDec = 0xF9461;
+		constexpr size_t StaminaJumpDec = 0xF93AC;
+		constexpr size_t MoneyChange = 0x33D9F6;
 	}
 
 	namespace fire_state

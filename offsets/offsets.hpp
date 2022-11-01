@@ -16,7 +16,7 @@ struct CActorMPNET : CActorMP
 	{
 		Base = 0x6ECC04;
 		Name = 0x30C;
-		Money = 0x2EC;
+		MoneyChange = 0x2EC;
 
 		Condition.Base = 0x9D8;
 		Condition.HP = 0x4;
@@ -56,6 +56,7 @@ struct CHUDManagerNET : CHUDManager
 	}
 };
 
+//Сделать дополнение этого класса в CHUDManager
 struct CCrosshairNET : CHUDManagerNET
 {
 	CCrosshairNET()
@@ -74,7 +75,7 @@ private:
 	private:
 		struct CCrosshair
 		{
-			pair_offsets_vector_baseoffset DelayInfo, TargetIsAlive, 
+			pair_offsets_vector_baseoffset DelayInfo, TargetIsAlive,
 				target_type, TargetExists, FireState;
 		};
 
@@ -98,7 +99,7 @@ private:
 		CWeapon Weapon;
 		CCrosshair Crosshair;
 		CPosition Position;
-		pair_offsets_vector_baseoffset HP, Stamina, Money, Weight, Name;
+		pair_offsets_vector_baseoffset HP, Stamina, MoneyChange, Weight, Name;
 	};
 
 public:
@@ -130,7 +131,7 @@ private:
 		Actor.Stamina = { { _Actor->Base, _Actor->Condition.Base, _Actor->Condition.Stamina }, _Actor };
 		Actor.HP = { { _Actor->Base, _Actor->Condition.Base, _Actor->Condition.HP }, _Actor };
 		Actor.Name = { {_Actor->Base, _Actor->Name}, _Actor };
-		Actor.Money = { {_Actor->Base, _Actor->Money}, _Actor };
+		Actor.MoneyChange = { {_Actor->Base, _Actor->MoneyChange}, _Actor };
 
 		Actor.Weight = { {_Actor->Base, _Actor->Inventory.Base,
 			_Actor->Inventory.ActorInventory.Base, _Actor->Inventory.ActorInventory.Weight}, _Actor };

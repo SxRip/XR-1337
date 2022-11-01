@@ -3,9 +3,9 @@ using DWORD = unsigned long;
 
 struct IOffsetBase
 {
-	IOffsetBase() : _Module{}
+	IOffsetBase() : _Module{"xrGame.dll"}
 	{}
-
+	
 	inline const char* get_module() const noexcept { return _Module; }
 	inline void set_module(const char* module) noexcept { _Module = module; }
 
@@ -15,8 +15,8 @@ private:
 
 struct CActorMP : IOffsetBase
 {
-	CActorMP() : Base{}, Name{}, Money{} {}
-	DWORD Base, Name, Money;
+	CActorMP() : Base{}, Name{}, MoneyChange{} {}
+	DWORD Base, Name, MoneyChange;
 
 	struct CActorCondition
 	{

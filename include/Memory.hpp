@@ -2,6 +2,8 @@
 #include "offsets/offsets.hpp"
 #include <Windows.h>
 #include <winternl.h>
+#include <map>
+#include <string>
 
 #pragma comment (lib, "ntdll.lib")
 
@@ -101,6 +103,29 @@ private:
 constexpr size_t NOP = 0x90;
 class Memory
 {
+private:
+	std::map<std::string, DWORD> _alreadyLoadedModules;
+
+	using const_map_interator = std::map<std::string, DWORD>::const_iterator;
+	inline const_map_interator _Check_if_module_exist(const char* _Module) const noexcept
+	{
+		return std::find_if(_alreadyLoadedModules.cbegin(), _alreadyLoadedModules.cend(),
+			[&](const std::pair<std::string, DWORD>& pair)
+			{
+				return pair.first == _Module;
+			});
+	}
+
+	inline void _Init_base_iterator(const_map_interator& _Iterator, const char* _Module) noexcept
+	{
+		_Iterator = _Check_if_module_exist(_Module);
+		if (_Iterator == _alreadyLoadedModules.cend())
+		{
+			_alreadyLoadedModules.emplace(_Module, get_modulebase(_Module));
+			_Iterator = _Check_if_module_exist(_Module);
+		}
+	}
+
 public:
 
 	inline DWORD get_modulebase(const char* _Module) const noexcept
@@ -110,12 +135,15 @@ public:
 
 	using pair_offsets_vector_baseoffset = std::pair<std::vector<DWORD>, IOffsetBase*>;
 	template <class _Ptr_value_type, class _Ty>
-	_Ptr_value_type* get_pointer(const std::vector<_Ty>& _Offsets, const char* _Module = nullptr)
+	_Ptr_value_type* get_pointer(const std::vector<_Ty>& _Offsets, const char* _Module = "xrGame.dll")
 	{
 		if (_Offsets.size() <= 0)
 			return nullptr;
 
-		DWORD dwClientBase = get_modulebase(_Module ? _Module : "xrGame.dll");
+		const_map_interator BaseIterator;
+		_Init_base_iterator(BaseIterator, _Module);
+
+		DWORD dwClientBase = BaseIterator->second;
 
 		if (!dwClientBase)
 			return nullptr;
@@ -143,9 +171,11 @@ public:
 	}
 
 	template <class _Ptr_value_type>
-	inline _Offset_Ptr<_Ptr_value_type> get_pointer(DWORD _Offset, const char* _Module = nullptr) const noexcept
+	inline _Offset_Ptr<_Ptr_value_type> get_pointer(DWORD _Offset, const char* _Module = "xrGame.dll") noexcept
 	{
-		DWORD dwClientBase = get_modulebase(_Module ? _Module : "xrGame.dll");
+		const_map_interator BaseIterator;
+		_Init_base_iterator(BaseIterator, _Module);
+		DWORD dwClientBase = BaseIterator->second;
 
 		if (!dwClientBase)
 			return nullptr;

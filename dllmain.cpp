@@ -9,10 +9,10 @@ void WINAPI Main(HMODULE hModule)
 {
 	Offsets offsets(MOD::StalkerNET);
 	Memory mem;
-
-	_Offset_Ptr<DWORD> StaminaRunDecInstruction = mem.get_pointer<DWORD>(stalker::signatures::StaminaRun);
-	_Offset_Ptr<DWORD> StaminaJumpDecInstruction = mem.get_pointer<DWORD>(stalker::signatures::StaminaJump);
-	_Offset_Ptr<DWORD> MoneyInstruction = mem.get_pointer<DWORD>(stalker::signatures::Money);
+	
+	_Offset_Ptr<DWORD> StaminaRunDecInstruction = mem.get_pointer<DWORD>(stalkerNET::signatures::StaminaRunDec);
+	_Offset_Ptr<DWORD> StaminaJumpDecInstruction = mem.get_pointer<DWORD>(stalkerNET::signatures::StaminaJumpDec);
+	_Offset_Ptr<DWORD> MoneyInstruction = mem.get_pointer<DWORD>(stalkerNET::signatures::MoneyChange);
 
 	mem.nop(StaminaRunDecInstruction, 6);
 	mem.nop(StaminaJumpDecInstruction, 6);
@@ -34,7 +34,7 @@ void WINAPI Main(HMODULE hModule)
 		_Offset_Ptr<size_t> pActorFireState = mem.get_pointer<size_t>(offsets.Actor.Crosshair.FireState);
 		_Offset_Ptr<size_t> pTargetType = mem.get_pointer<size_t>(offsets.Actor.Crosshair.target_type);
 
-		_Offset_Ptr<int> pMoney = mem.get_pointer<int>(offsets.Actor.Money);
+		_Offset_Ptr<int> pMoney = mem.get_pointer<int>(offsets.Actor.MoneyChange);
 
 		_Offset_Ptr<bool> pWeaponSelected = mem.get_pointer<bool>(offsets.Actor.Weapon.IsInHands);
 
@@ -46,8 +46,8 @@ void WINAPI Main(HMODULE hModule)
 			pMoney += 100000;
 
 		if (pWeaponSelected)
-			if (pTargetType == stalker::target_type::alive)
-				if (pActorFireState == stalker::fire_state::can_shoot)
+			if (pTargetType == stalkerNET::target_type::alive)
+				if (pActorFireState == stalkerNET::fire_state::can_shoot)
 					if (GetForegroundWindowName() == "xrEngine.exe")
 					{
 						mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
