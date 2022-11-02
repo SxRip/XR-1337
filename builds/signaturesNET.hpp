@@ -8,4 +8,3 @@ constexpr DWORD dwActorCondition = 0x9D8;
 constexpr DWORD dwActorCamera = 0x5A0;
 constexpr DWORD dwActorWeapon = 0x6F0C74;
 constexpr DWORD dwHudManager = 0x992D4;
-constexpr DWORD dwActorWeapon = 0x6F0C74;

@@ -253,7 +253,7 @@ public:
 		DWORD _protect;
 		VirtualProtect(&_Address, _Size, PAGE_READWRITE, &_protect);
 
-		memset(&_Address, 0x90, _Size);
+		memset(&_Address, NOP, _Size);
 
 		VirtualProtect(&_Address, _Size, _protect, &_protect);
 	}
@@ -263,7 +263,7 @@ public:
 		_nop(_Address, _Size);
 	}
 
-	inline void _nop(_Offset_Ptr<DWORD> _Ptr, size_t _Size) const noexcept
+	inline void _nop(_Offset_Ptr<DWORD>& _Ptr, size_t _Size) const noexcept
 	{
 		_nop(*_Ptr, _Size);
 	}
