@@ -151,9 +151,6 @@ public:
 
 		for (size_t i = 0; i < _Offsets.size(); ++i)
 		{
-			if (_Offsets[i] == 0)
-				continue;
-
 			if (i == _Offsets.size() - 1)
 				return reinterpret_cast<_Ptr_value_type*>(dwClientBase + _Offsets[i]);
 
