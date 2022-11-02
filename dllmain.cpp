@@ -1,27 +1,24 @@
-﻿#include "include/Memory.hpp"
-#include "include/internet.hpp"
-#include "include/handles.hpp"
+﻿#define STALKERNET
+
+#include "1337/includes.hpp"
 #include "include/processes.hpp"
-#include "offsets/offsets.hpp"
-#include "stalker_vars.hpp"
 
 void WINAPI Main(HMODULE hModule)
 {
-	Offsets offsets(MOD::StalkerNET);
 	Memory mem;
-	
-	_Offset_Ptr<DWORD> StaminaRunDecInstruction = mem.get_pointer<DWORD>(stalkerNET::signatures::StaminaRunDec);
-	_Offset_Ptr<DWORD> StaminaJumpDecInstruction = mem.get_pointer<DWORD>(stalkerNET::signatures::StaminaJumpDec);
-	_Offset_Ptr<DWORD> MoneyInstruction = mem.get_pointer<DWORD>(stalkerNET::signatures::MoneyChange);
+
+	_Offset_Ptr<DWORD> StaminaRunDecInstruction = mem.get_pointer<DWORD>(signatures::StaminaRunDec);
+	_Offset_Ptr<DWORD> StaminaJumpDecInstruction = mem.get_pointer<DWORD>(signatures::StaminaJumpDec);
+	_Offset_Ptr<DWORD> MoneyInstruction = mem.get_pointer<DWORD>(signatures::MoneyChange);
 
 	mem.nop(StaminaRunDecInstruction, 6);
 	mem.nop(StaminaJumpDecInstruction, 6);
 
 	while (!GetAsyncKeyState(VK_END))
 	{
-		_Offset_Ptr<float> pStamina = mem.get_pointer<float>(offsets.Actor.Stamina);
-		_Offset_Ptr<float> pHP = mem.get_pointer<float>(offsets.Actor.HP);
-		_Offset_Ptr<float> pWeight = mem.get_pointer<float>(offsets.Actor.Weight);
+		_Offset_Ptr<float> pStamina = mem.get_pointer<float>(offsets::actor::stamina);
+		_Offset_Ptr<float> pHP = mem.get_pointer<float>(offsets::actor::HP);
+		/*_Offset_Ptr<float> pWeight = mem.get_pointer<float>(offsets.Actor.Weight);
 		_Offset_Ptr<float> pCrosshairDelayInfo = mem.get_pointer<float>(offsets.Actor.Crosshair.DelayInfo);
 		_Offset_Ptr<float> pFov = mem.get_pointer<float>(offsets.Actor.Camera.Fov);
 
@@ -29,7 +26,7 @@ void WINAPI Main(HMODULE hModule)
 		_Offset_Ptr<float> pY = mem.get_pointer<float>(offsets.Actor.Position.y);
 		_Offset_Ptr<float> pZ = mem.get_pointer<float>(offsets.Actor.Position.z);
 
-		_Offset_Ptr<const char> pActorName = mem.get_pointer<const char>(offsets.Actor.Name);
+		_Offset_Ptr<const char> pActorName = mem.get_pointer<const char>(offsets::actor::name);
 
 		_Offset_Ptr<size_t> pActorFireState = mem.get_pointer<size_t>(offsets.Actor.Crosshair.FireState);
 		_Offset_Ptr<size_t> pTargetType = mem.get_pointer<size_t>(offsets.Actor.Crosshair.target_type);
@@ -43,18 +40,18 @@ void WINAPI Main(HMODULE hModule)
 		pWeight = 0;
 
 		if (*pMoney < 1000000)
-			pMoney += 100000;
+			pMoney += 100000;*/
 
-		if (pWeaponSelected)
-			if (pTargetType == stalkerNET::target_type::alive)
-				if (pActorFireState == stalkerNET::fire_state::can_shoot)
+		/*if (pWeaponSelected)
+			if (pTargetType == signatures::target_type::alive)
+				if (pActorFireState == signatures::fire_state::can_shoot)*/
 					if (GetForegroundWindowName() == "xrEngine.exe")
 					{
 						mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
 						mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
 					}
 
-		pCrosshairDelayInfo = 1;
+		//pCrosshairDelayInfo = 1;
 	}
 
 	FreeLibraryAndExitThread(hModule, 0);

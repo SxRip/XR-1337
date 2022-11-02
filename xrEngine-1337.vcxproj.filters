@@ -16,6 +16,12 @@
     <Filter Include="include">
       <UniqueIdentifier>{4b4a5e7d-9896-4851-9f43-4b7662862fa6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="builds">
+      <UniqueIdentifier>{90081d50-e612-4094-8911-16db6c647716}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1337">
+      <UniqueIdentifier>{b0efc934-07df-47e0-9f0c-64e7ddd5286b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\handles.hpp">
@@ -24,20 +30,47 @@
     <ClInclude Include="include\processes.hpp">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="offsets\interfaces.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="builds\game_varsNET.hpp">
+      <Filter>builds</Filter>
     </ClInclude>
-    <ClInclude Include="offsets\offsets.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="builds\game_varsOMP.hpp">
+      <Filter>builds</Filter>
     </ClInclude>
-    <ClInclude Include="include\Memory.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="builds\game_varsXRMPE.hpp">
+      <Filter>builds</Filter>
     </ClInclude>
-    <ClInclude Include="include\internet.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="builds\offsetsNET.hpp">
+      <Filter>builds</Filter>
     </ClInclude>
-    <ClInclude Include="stalker_vars.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="builds\offsetsOMP.hpp">
+      <Filter>builds</Filter>
+    </ClInclude>
+    <ClInclude Include="builds\offsetsXRMPE.hpp">
+      <Filter>builds</Filter>
+    </ClInclude>
+    <ClInclude Include="builds\signaturesNET.hpp">
+      <Filter>builds</Filter>
+    </ClInclude>
+    <ClInclude Include="builds\signaturesOMP.hpp">
+      <Filter>builds</Filter>
+    </ClInclude>
+    <ClInclude Include="builds\signaturesXRMPE.hpp">
+      <Filter>builds</Filter>
+    </ClInclude>
+    <ClInclude Include="1337\game_vars.hpp">
+      <Filter>1337</Filter>
+    </ClInclude>
+    <ClInclude Include="1337\includes.hpp">
+      <Filter>1337</Filter>
+    </ClInclude>
+    <ClInclude Include="1337\offsets.hpp">
+      <Filter>1337</Filter>
+    </ClInclude>
+    <ClInclude Include="1337\signatures.hpp">
+      <Filter>1337</Filter>
+    </ClInclude>
+    <ClInclude Include="1337\Memory.hpp">
+      <Filter>1337</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -49,9 +82,6 @@
     </ClCompile>
     <ClCompile Include="include\processes.cpp">
       <Filter>include</Filter>
-    </ClCompile>
-    <ClCompile Include="include\Memory.cpp">
-      <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

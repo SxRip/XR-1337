@@ -1,5 +1,6 @@
 #pragma once
-#include "offsets/offsets.hpp"
+//#include "offsets/offsets.hpp"
+#include <vector>
 #include <Windows.h>
 #include <winternl.h>
 #include <map>
@@ -133,7 +134,7 @@ public:
 		return reinterpret_cast<DWORD>(GetModuleHandle(_Module));
 	}
 
-	using pair_offsets_vector_baseoffset = std::pair<std::vector<DWORD>, IOffsetBase*>;
+	//using pair_offsets_vector_baseoffset = std::pair<std::vector<DWORD>, const char*>;
 	template <class _Ptr_value_type, class _Ty>
 	_Ptr_value_type* get_pointer(const std::vector<_Ty>& _Offsets, const char* _Module = "xrGame.dll")
 	{
@@ -165,9 +166,9 @@ public:
 	}
 
 	template <class _Ptr_value_type>
-	inline _Offset_Ptr<_Ptr_value_type> get_pointer(const pair_offsets_vector_baseoffset& _Pair)
+	inline _Offset_Ptr<_Ptr_value_type> get_pointer(const std::pair<std::vector<DWORD>, const char*>& _Pair)
 	{
-		return get_pointer<_Ptr_value_type>(_Pair.first, _Pair.second->get_module());
+		return get_pointer<_Ptr_value_type>(_Pair.first, _Pair.second);
 	}
 
 	template <class _Ptr_value_type>

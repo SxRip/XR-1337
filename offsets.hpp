@@ -1,15 +1,27 @@
 #pragma once
-#include "interfaces.hpp"
 #include <vector>
+using offset_module = std::pair<const std::vector<DWORD>&, const char*>;
 
-enum class MOD
+inline offset_module make_pair(const std::vector<DWORD>& _Offsets, const char* _Module = "xrGame.dll") noexcept
 {
-	XRMPE,
-	OMP,
-	SoProject,
-	StalkerNET
-};
+	return offset_module(_Offsets, _Module);
+}
 
+namespace offsets
+{
+#ifdef STALKERNET
+	#include "../builds/offsetsNET.hpp"
+#endif // STALKERNET
+
+#ifdef OMP
+#include "builds/offsetsOMP.hpp"
+#endif // OMP
+
+#ifdef XRMPE
+#include "builds/offsetsXRMPE.hpp"
+#endif // XRMPE
+}
+/*
 struct CActorMPNET : CActorMP
 {
 	CActorMPNET()
@@ -104,25 +116,6 @@ private:
 
 public:
 
-	Offsets(MOD _Platform)
-	{
-		switch (_Platform)
-		{
-		case MOD::StalkerNET:
-			_Actor = &_ActorNET;
-			_HudManager = &_HudManagerNET;
-			break;
-
-		case MOD::OMP:
-			break;
-
-		case MOD::SoProject:
-			break;
-		}
-
-		_Init_offsets();
-	}
-
 	CActor Actor;
 private:
 
@@ -164,8 +157,6 @@ private:
 
 
 /*/////////////////////soProject/////////////////////////
-* #define oStamina 0x54
-  #define oMoney 0x2EC
 //"xrGame.dll" + 000E7584 + 98 + 4 + 40 + 100 + 124 + 1C + 4
 //// другие оффсеты к этому же базовому адресу
 //58 + 14 + 40 + 100 + 124 + 1C + 4

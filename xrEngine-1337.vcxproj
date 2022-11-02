@@ -171,18 +171,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="1337\game_vars.hpp" />
+    <ClInclude Include="1337\includes.hpp" />
+    <ClInclude Include="1337\Memory.hpp" />
+    <ClInclude Include="1337\offsets.hpp" />
+    <ClInclude Include="1337\signatures.hpp" />
+    <ClInclude Include="builds\game_varsNET.hpp" />
+    <ClInclude Include="builds\game_varsOMP.hpp" />
+    <ClInclude Include="builds\game_varsXRMPE.hpp" />
+    <ClInclude Include="builds\offsetsNET.hpp" />
+    <ClInclude Include="builds\offsetsOMP.hpp" />
+    <ClInclude Include="builds\offsetsXRMPE.hpp" />
+    <ClInclude Include="builds\signaturesNET.hpp" />
+    <ClInclude Include="builds\signaturesOMP.hpp" />
+    <ClInclude Include="builds\signaturesXRMPE.hpp" />
     <ClInclude Include="include\handles.hpp" />
-    <ClInclude Include="include\internet.hpp" />
-    <ClInclude Include="include\Memory.hpp" />
     <ClInclude Include="include\processes.hpp" />
-    <ClInclude Include="stalker_vars.hpp" />
-    <ClInclude Include="offsets\interfaces.hpp" />
-    <ClInclude Include="offsets\offsets.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="include\handles.cpp" />
-    <ClCompile Include="include\Memory.cpp" />
     <ClCompile Include="include\processes.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
