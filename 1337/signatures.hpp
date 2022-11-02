@@ -3,7 +3,7 @@
 namespace signatures
 {
 #ifdef STALKERNET
-	#include "builds/signaturesNET.hpp"
+	#include "../builds/signaturesNET.hpp"
 #endif // 
 
 #ifdef OMP

@@ -10,15 +10,15 @@ inline offset_module make_pair(const std::vector<DWORD>& _Offsets, const char* _
 namespace offsets
 {
 #ifdef STALKERNET
-	#include "builds/offsetsNET.hpp"
+	#include "../builds/offsetsNET.hpp"
 #endif // STALKERNET
 
 #ifdef OMP
-#include "builds/offsetsOMP.hpp"
+#include "../builds/offsetsOMP.hpp"
 #endif // OMP
 
 #ifdef XRMPE
-#include "builds/offsetsXRMPE.hpp"
+#include "../builds/offsetsXRMPE.hpp"
 #endif // XRMPE
 }
 /*
