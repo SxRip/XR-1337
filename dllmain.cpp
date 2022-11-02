@@ -7,9 +7,9 @@ void WINAPI Main(HMODULE hModule)
 {
 	Memory mem;
 
-	_Offset_Ptr<DWORD> StaminaRunDecInstruction = mem.get_pointer<DWORD>(signatures::StaminaRunDec);
-	_Offset_Ptr<DWORD> StaminaJumpDecInstruction = mem.get_pointer<DWORD>(signatures::StaminaJumpDec);
-	_Offset_Ptr<DWORD> MoneyInstruction = mem.get_pointer<DWORD>(signatures::MoneyChange);
+	_Offset_Ptr<DWORD> StaminaRunDecInstruction = mem.get_pointer<DWORD>(signatures::staminaRunDec);
+	_Offset_Ptr<DWORD> StaminaJumpDecInstruction = mem.get_pointer<DWORD>(signatures::staminaJumpDec);
+	_Offset_Ptr<DWORD> MoneyInstruction = mem.get_pointer<DWORD>(signatures::moneyChange);
 
 	mem.nop(StaminaRunDecInstruction, 6);
 	mem.nop(StaminaJumpDecInstruction, 6);
