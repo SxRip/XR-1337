@@ -179,6 +179,9 @@
     <ClInclude Include="builds\game_varsNET.hpp" />
     <ClInclude Include="builds\game_varsOMP.hpp" />
     <ClInclude Include="builds\game_varsXRMPE.hpp" />
+    <ClInclude Include="builds\initializedOffsetsNET.hpp" />
+    <ClInclude Include="builds\initializedOffsetsOMP.hpp" />
+    <ClInclude Include="builds\initializedOffsetsXRMPE.hpp" />
     <ClInclude Include="builds\offsetsNET.hpp" />
     <ClInclude Include="builds\offsetsOMP.hpp" />
     <ClInclude Include="builds\offsetsXRMPE.hpp" />

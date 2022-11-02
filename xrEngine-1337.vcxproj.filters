@@ -72,6 +72,15 @@
     <ClInclude Include="1337\Memory.hpp">
       <Filter>1337</Filter>
     </ClInclude>
+    <ClInclude Include="builds\initializedOffsetsNET.hpp">
+      <Filter>builds</Filter>
+    </ClInclude>
+    <ClInclude Include="builds\initializedOffsetsOMP.hpp">
+      <Filter>builds</Filter>
+    </ClInclude>
+    <ClInclude Include="builds\initializedOffsetsXRMPE.hpp">
+      <Filter>builds</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">

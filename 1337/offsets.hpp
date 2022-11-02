@@ -21,6 +21,22 @@ namespace offsets
 #include "../builds/offsetsXRMPE.hpp"
 #endif // XRMPE
 }
+
+namespace generated_offsets
+{
+#ifdef STALKERNET
+#include "../builds/initializedOffsetsNET.hpp"
+#endif // STALKERNET
+
+#ifdef OMP
+#include "../builds/initializedOffsetsOMP.hpp"
+#endif // OMP
+
+#ifdef XRMPE
+#include "../builds/initializedOffsetsXRMPE.hpp"
+#endif // XRMPE
+}
+
 /*
 struct CActorMPNET : CActorMP
 {

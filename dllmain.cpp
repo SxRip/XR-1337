@@ -16,8 +16,8 @@ void WINAPI Main(HMODULE hModule)
 
 	while (!GetAsyncKeyState(VK_END))
 	{
-		_Offset_Ptr<float> pStamina = mem.get_pointer<float>(offsets::actor::stamina);
-		_Offset_Ptr<float> pHP = mem.get_pointer<float>(offsets::actor::HP);
+		_Offset_Ptr<float> pStamina = mem.get_pointer<float>(generated_offsets::actor::stamina);
+		_Offset_Ptr<float> pHP = mem.get_pointer<float>(generated_offsets::actor::HP);
 		/*_Offset_Ptr<float> pWeight = mem.get_pointer<float>(offsets.Actor.Weight);
 		_Offset_Ptr<float> pCrosshairDelayInfo = mem.get_pointer<float>(offsets.Actor.Crosshair.DelayInfo);
 		_Offset_Ptr<float> pFov = mem.get_pointer<float>(offsets.Actor.Camera.Fov);
