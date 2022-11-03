@@ -1,5 +1,4 @@
 #pragma once
-//#include "offsets/offsets.hpp"
 #include <vector>
 #include <Windows.h>
 #include <winternl.h>
@@ -13,10 +12,10 @@ PPEB GetCurrentPebProcess()
 	PROCESS_BASIC_INFORMATION ProcessInformation{};
 	DWORD ReturnValue;
 
-	NTSTATUS Ok = NtQueryInformationProcess(GetCurrentProcess(),
+	NTSTATUS NotOK = NtQueryInformationProcess(GetCurrentProcess(),
 		ProcessBasicInformation, &ProcessInformation, sizeof(PROCESS_BASIC_INFORMATION), &ReturnValue);
 
-	if (Ok || !ProcessInformation.PebBaseAddress)
+	if (NotOK || !ProcessInformation.PebBaseAddress)
 		return nullptr;
 
 	return ProcessInformation.PebBaseAddress;
@@ -99,6 +98,26 @@ public:
 
 private:
 	_Ptr_value_type* _ptr;
+};
+
+class signature
+{
+public:
+	signature(DWORD _Offset, size_t _BytesNopCount, const char* _Module = "xrGame.dll")
+		: _nop_bytes{ _BytesNopCount }
+	{
+		_ptr = reinterpret_cast<DWORD*>(reinterpret_cast<DWORD>(GetModuleHandle(_Module)) + _Offset);
+	}
+
+	inline _Offset_Ptr<DWORD> get_ptr() const noexcept { return _ptr; }
+	inline size_t get_nop_bytes() const noexcept { return _nop_bytes; }
+
+	inline signature& set_ptr(const _Offset_Ptr<DWORD>& _Ptr) noexcept { _ptr = _Ptr; return *this; }
+	inline signature& set_nop_bytes(size_t _BytesNopCount) noexcept { _nop_bytes = _BytesNopCount; return *this; }
+
+private:
+	_Offset_Ptr<DWORD> _ptr;
+	size_t _nop_bytes;
 };
 
 constexpr size_t NOP = 0x90;
@@ -204,6 +223,11 @@ public:
 		return path(*_Ptr, _PathSign, _Size);
 	}
 
+	inline bool path(signature& _Sign, const char* _PathSign, size_t _Size) const noexcept
+	{
+		return path(*_Sign.get_ptr(), _PathSign, _Size);
+	}
+
 	inline bool nop(DWORD& _Address, size_t _Size) const noexcept
 	{
 		DWORD _protect;
@@ -217,15 +241,11 @@ public:
 		return true;
 	}
 
-	inline bool nop(DWORD&& _Address, size_t _Size) const noexcept
-	{
-		return nop(_Address, _Size);
-	}
+	inline bool nop(DWORD&& _Address, size_t _Size) const noexcept { return nop(_Address, _Size); }
 
-	inline bool nop(_Offset_Ptr<DWORD>& _Ptr, size_t _Size) const noexcept
-	{
-		return nop(*_Ptr, _Size);
-	}
+	inline bool nop(_Offset_Ptr<DWORD>& _Ptr, size_t _Size) const noexcept { return nop(*_Ptr, _Size); }
+
+	inline bool nop(signature& _Sign) const noexcept { return nop(*_Sign.get_ptr(), _Sign.get_nop_bytes()); }
 
 	//non secure version of the functions.
 	inline void _path(DWORD& _Address, const char* _PathSign, size_t _Size) const noexcept
@@ -248,6 +268,11 @@ public:
 		_path(*_Ptr, _PathSign, _Size);
 	}
 
+	inline void _path(signature& _Sign, const char* _PathSign, size_t _Size) const noexcept
+	{
+		_path(*_Sign.get_ptr(), _PathSign, _Size);
+	}
+
 	inline void _nop(DWORD& _Address, size_t _Size) const noexcept
 	{
 		DWORD _protect;
@@ -258,13 +283,12 @@ public:
 		VirtualProtect(&_Address, _Size, _protect, &_protect);
 	}
 
-	inline void _nop(DWORD&& _Address, size_t _Size) const noexcept
-	{
-		_nop(_Address, _Size);
-	}
+	inline void _nop(DWORD&& _Address, size_t _Size) const noexcept { _nop(_Address, _Size); }
 
-	inline void _nop(_Offset_Ptr<DWORD>& _Ptr, size_t _Size) const noexcept
+	inline void _nop(_Offset_Ptr<DWORD>& _Ptr, size_t _Size) const noexcept { _nop(*_Ptr, _Size); }
+
+	inline void _nop(signature& _Sign, size_t _Size) const noexcept
 	{
-		_nop(*_Ptr, _Size);
+		_nop(*_Sign.get_ptr(), _Sign.get_nop_bytes());
 	}
 };

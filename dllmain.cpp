@@ -13,13 +13,12 @@ void WINAPI Main(HMODULE hModule)
 {
 	Memory mem;
 
-	_Offset_Ptr<DWORD> StaminaRunDecInstruction = mem.get_pointer<DWORD>(signatures::staminaRunDec);
-	_Offset_Ptr<DWORD> StaminaJumpDecInstruction = mem.get_pointer<DWORD>(signatures::staminaJumpDec);
-	_Offset_Ptr<DWORD> MoneyInstruction = mem.get_pointer<DWORD>(signatures::moneyChange);
-	_Offset_Ptr<DWORD> CheckWeight = mem.get_pointer<DWORD>(signatures::gameWeightCheck);
+	signature staminaRunDecSign = signatures::initialized::staminaRunDec;
+	signature staminaJumpDecSign = signatures::initialized::staminaJumpDec;
+	signature weightCheck = signatures::initialized::gameWeightCheck;
+	signature moneyChange = signatures::initialized::moneyChange;
 
-	mem.nop(StaminaRunDecInstruction, 6);
-	mem.nop(StaminaJumpDecInstruction, 6);
+	mem.nop(staminaRunDecSign);
 
 	while (!GetAsyncKeyState(VK_END))
 	{
@@ -47,11 +46,7 @@ void WINAPI Main(HMODULE hModule)
 		pWeight = 0;
 
 		if (*pMoney < 1000000)
-		{
 			pMoney += 100000;
-			if (*pMoney >= 1000000)
-				mem.nop(MoneyInstruction, 3);
-		}
 
 		if (pWeaponInHands)
 			if (pTargetType == game::target_type::alive)

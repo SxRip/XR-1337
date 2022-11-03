@@ -4,13 +4,13 @@ using offset_module = std::pair<std::vector<DWORD>, const char*>;
 
 inline offset_module _Init_offset(const std::vector<DWORD>& _Offsets, const char* _Module = "xrGame.dll") noexcept
 {
-	return offset_module(_Offsets, _Module);
+	return { _Offsets, _Module };
 }
 
 namespace offsets
 {
 #ifdef STALKERNET
-	#include "../builds/offsetsNET.hpp"
+#include "../builds/offsetsNET.hpp"
 #endif // STALKERNET
 
 #ifdef OMP
