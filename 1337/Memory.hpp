@@ -128,13 +128,13 @@ private:
 	}
 
 public:
+	using pair_offsets_module_vector = std::pair<std::vector<DWORD>, const char*>;
 
 	inline DWORD get_modulebase(const char* _Module) const noexcept
 	{
 		return reinterpret_cast<DWORD>(GetModuleHandle(_Module));
 	}
 
-	//using pair_offsets_vector_baseoffset = std::pair<std::vector<DWORD>, const char*>;
 	template <class _Ptr_value_type, class _Ty>
 	_Ptr_value_type* get_pointer(const std::vector<_Ty>& _Offsets, const char* _Module)
 	{
@@ -163,7 +163,7 @@ public:
 	}
 
 	template <class _Ptr_value_type>
-	inline _Offset_Ptr<_Ptr_value_type> get_pointer(const std::pair<std::vector<DWORD>, const char*>& _Pair)
+	inline _Offset_Ptr<_Ptr_value_type> get_pointer(const pair_offsets_module_vector& _Pair)
 	{
 		return get_pointer<_Ptr_value_type>(_Pair.first, _Pair.second);
 	}
