@@ -5,6 +5,10 @@
 #include "1337/includes.hpp"
 #include "include/processes.hpp"
 
+/* TODO:
+* Add new sign class for initializing the signatures marked as offsets pointers at this time
+*/
+
 void WINAPI Main(HMODULE hModule)
 {
 	Memory mem;
@@ -12,37 +16,42 @@ void WINAPI Main(HMODULE hModule)
 	_Offset_Ptr<DWORD> StaminaRunDecInstruction = mem.get_pointer<DWORD>(signatures::staminaRunDec);
 	_Offset_Ptr<DWORD> StaminaJumpDecInstruction = mem.get_pointer<DWORD>(signatures::staminaJumpDec);
 	_Offset_Ptr<DWORD> MoneyInstruction = mem.get_pointer<DWORD>(signatures::moneyChange);
+	_Offset_Ptr<DWORD> CheckWeight = mem.get_pointer<DWORD>(signatures::gameWeightCheck);
 
 	mem.nop(StaminaRunDecInstruction, 6);
 	mem.nop(StaminaJumpDecInstruction, 6);
 
 	while (!GetAsyncKeyState(VK_END))
 	{
-		_Offset_Ptr<float> pStamina = mem.get_pointer<float>(generated_offsets::actor::stamina);
-		_Offset_Ptr<float> pHP = mem.get_pointer<float>(generated_offsets::actor::HP);
-		_Offset_Ptr<float> pWeight = mem.get_pointer<float>(generated_offsets::actor::weight);
-		_Offset_Ptr<float> pCrosshairDelayInfo = mem.get_pointer<float>(generated_offsets::actor::crosshairDelayInfo);
-		_Offset_Ptr<float> pFov = mem.get_pointer<float>(generated_offsets::actor::fov);
+		_Offset_Ptr<float> pStamina = mem.get_pointer<float>(initialized_offsets::actor::stamina);
+		_Offset_Ptr<float> pHP = mem.get_pointer<float>(initialized_offsets::actor::HP);
+		_Offset_Ptr<float> pWeight = mem.get_pointer<float>(initialized_offsets::actor::weight);
+		_Offset_Ptr<float> pCrosshairDelayInfo = mem.get_pointer<float>(initialized_offsets::actor::crosshairDelayInfo);
+		_Offset_Ptr<float> pFov = mem.get_pointer<float>(initialized_offsets::actor::fov);
 
-		_Offset_Ptr<float> pX = mem.get_pointer<float>(generated_offsets::actor::coordX);
-		_Offset_Ptr<float> pY = mem.get_pointer<float>(generated_offsets::actor::coordY);
-		_Offset_Ptr<float> pZ = mem.get_pointer<float>(generated_offsets::actor::coordZ);
+		_Offset_Ptr<float> pX = mem.get_pointer<float>(initialized_offsets::actor::coordX);
+		_Offset_Ptr<float> pY = mem.get_pointer<float>(initialized_offsets::actor::coordY);
+		_Offset_Ptr<float> pZ = mem.get_pointer<float>(initialized_offsets::actor::coordZ);
 
-		_Offset_Ptr<const char> pActorName = mem.get_pointer<const char>(generated_offsets::actor::name);
+		_Offset_Ptr<const char> pActorName = mem.get_pointer<const char>(initialized_offsets::actor::name);
 
-		_Offset_Ptr<size_t> pActorFireState = mem.get_pointer<size_t>(generated_offsets::actor::fireState);
-		_Offset_Ptr<size_t> pTargetType = mem.get_pointer<size_t>(generated_offsets::actor::targetType);
+		_Offset_Ptr<size_t> pActorFireState = mem.get_pointer<size_t>(initialized_offsets::actor::fireState);
+		_Offset_Ptr<size_t> pTargetType = mem.get_pointer<size_t>(initialized_offsets::actor::targetType);
 
-		_Offset_Ptr<int> pMoney = mem.get_pointer<int>(generated_offsets::actor::money);
+		_Offset_Ptr<int> pMoney = mem.get_pointer<int>(initialized_offsets::actor::money);
 
-		_Offset_Ptr<bool> pWeaponInHands = mem.get_pointer<bool>(generated_offsets::actor::weaponIsInHands);
+		_Offset_Ptr<bool> pWeaponInHands = mem.get_pointer<bool>(initialized_offsets::actor::weaponIsInHands);
 
 		pStamina = 1;
 
 		pWeight = 0;
 
 		if (*pMoney < 1000000)
+		{
 			pMoney += 100000;
+			if (*pMoney >= 1000000)
+				mem.nop(MoneyInstruction, 3);
+		}
 
 		if (pWeaponInHands)
 			if (pTargetType == game::target_type::alive)

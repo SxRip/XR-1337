@@ -22,7 +22,7 @@ namespace offsets
 #endif // XRMPE
 }
 
-namespace generated_offsets
+namespace initialized_offsets
 {
 #ifdef STALKERNET
 #include "../builds/initializedOffsetsNET.hpp"
