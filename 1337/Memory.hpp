@@ -136,7 +136,7 @@ public:
 
 	//using pair_offsets_vector_baseoffset = std::pair<std::vector<DWORD>, const char*>;
 	template <class _Ptr_value_type, class _Ty>
-	_Ptr_value_type* get_pointer(const std::vector<_Ty>& _Offsets, const char* _Module = "xrGame.dll")
+	_Ptr_value_type* get_pointer(const std::vector<_Ty>& _Offsets, const char* _Module)
 	{
 		if (_Offsets.size() <= 0)
 			return nullptr;

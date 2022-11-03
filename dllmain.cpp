@@ -20,40 +20,40 @@ void WINAPI Main(HMODULE hModule)
 	{
 		_Offset_Ptr<float> pStamina = mem.get_pointer<float>(generated_offsets::actor::stamina);
 		_Offset_Ptr<float> pHP = mem.get_pointer<float>(generated_offsets::actor::HP);
-		/*_Offset_Ptr<float> pWeight = mem.get_pointer<float>(offsets.Actor.Weight);
-		_Offset_Ptr<float> pCrosshairDelayInfo = mem.get_pointer<float>(offsets.Actor.Crosshair.DelayInfo);
-		_Offset_Ptr<float> pFov = mem.get_pointer<float>(offsets.Actor.Camera.Fov);
+		_Offset_Ptr<float> pWeight = mem.get_pointer<float>(generated_offsets::actor::weight);
+		_Offset_Ptr<float> pCrosshairDelayInfo = mem.get_pointer<float>(generated_offsets::actor::crosshairDelayInfo);
+		_Offset_Ptr<float> pFov = mem.get_pointer<float>(generated_offsets::actor::fov);
 
-		_Offset_Ptr<float> pX = mem.get_pointer<float>(offsets.Actor.Position.x);
-		_Offset_Ptr<float> pY = mem.get_pointer<float>(offsets.Actor.Position.y);
-		_Offset_Ptr<float> pZ = mem.get_pointer<float>(offsets.Actor.Position.z);
+		_Offset_Ptr<float> pX = mem.get_pointer<float>(generated_offsets::actor::coordX);
+		_Offset_Ptr<float> pY = mem.get_pointer<float>(generated_offsets::actor::coordY);
+		_Offset_Ptr<float> pZ = mem.get_pointer<float>(generated_offsets::actor::coordZ);
 
-		_Offset_Ptr<const char> pActorName = mem.get_pointer<const char>(offsets::actor::name);
+		_Offset_Ptr<const char> pActorName = mem.get_pointer<const char>(generated_offsets::actor::name);
 
-		_Offset_Ptr<size_t> pActorFireState = mem.get_pointer<size_t>(offsets.Actor.Crosshair.FireState);
-		_Offset_Ptr<size_t> pTargetType = mem.get_pointer<size_t>(offsets.Actor.Crosshair.target_type);
+		_Offset_Ptr<size_t> pActorFireState = mem.get_pointer<size_t>(generated_offsets::actor::fireState);
+		_Offset_Ptr<size_t> pTargetType = mem.get_pointer<size_t>(generated_offsets::actor::targetType);
 
-		_Offset_Ptr<int> pMoney = mem.get_pointer<int>(offsets.Actor.MoneyChange);
+		_Offset_Ptr<int> pMoney = mem.get_pointer<int>(generated_offsets::actor::money);
 
-		_Offset_Ptr<bool> pWeaponSelected = mem.get_pointer<bool>(offsets.Actor.Weapon.IsInHands);
+		_Offset_Ptr<bool> pWeaponInHands = mem.get_pointer<bool>(generated_offsets::actor::weaponIsInHands);
 
 		pStamina = 1;
 
 		pWeight = 0;
 
 		if (*pMoney < 1000000)
-			pMoney += 100000;*/
+			pMoney += 100000;
 
-		/*if (pWeaponSelected)
-			if (pTargetType == signatures::target_type::alive)
-				if (pActorFireState == signatures::fire_state::can_shoot)*/
+		if (pWeaponInHands)
+			if (pTargetType == game::target_type::alive)
+				if (pActorFireState == game::fire_state::can_shoot)
 					if (GetForegroundWindowName() == "xrEngine.exe")
 					{
 						mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
 						mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
 					}
 
-		//pCrosshairDelayInfo = 1;
+		pCrosshairDelayInfo = 1;
 	}
 
 	FreeLibraryAndExitThread(hModule, 0);

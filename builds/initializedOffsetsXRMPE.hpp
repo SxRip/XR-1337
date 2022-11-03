@@ -2,7 +2,7 @@
 
 namespace actor
 {
-	offset_module name = make_pair({ 0x6ECC04, 0x30C });
-	offset_module stamina = make_pair({ 0x6ECC04, 0x9D8, 0x114 });
-	offset_module HP = make_pair({ 0x6ECC04, 0x9D8, 0x4 });
+	offset_module name = _Init_offset({ 0x6ECC04, 0x30C });
+	offset_module stamina = _Init_offset({ 0x6ECC04, 0x9D8, 0x114 });
+	offset_module HP = _Init_offset({ 0x6ECC04, 0x9D8, 0x4 });
 }

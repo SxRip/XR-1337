@@ -2,7 +2,7 @@
 #include <vector>
 using offset_module = std::pair<std::vector<DWORD>, const char*>;
 
-inline offset_module make_pair(const std::vector<DWORD>& _Offsets, const char* _Module = "xrGame.dll") noexcept
+inline offset_module _Init_offset(const std::vector<DWORD>& _Offsets, const char* _Module = "xrGame.dll") noexcept
 {
 	return offset_module(_Offsets, _Module);
 }
