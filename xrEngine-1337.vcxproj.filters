@@ -96,7 +96,7 @@
       <Filter>include</Filter>
     </ClCompile>
     <ClCompile Include="XR-1337\includes\Memory.cpp">
-      <Filter>Исходные файлы</Filter>
+      <Filter>XR-1337\includes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

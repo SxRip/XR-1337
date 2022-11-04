@@ -81,9 +81,6 @@ constexpr size_t NOP = 0x90;
 
 class Memory
 {
-public:
-	Memory() = default;
-
 private:
 	std::map<std::string, DWORD> _alreadyLoadedModules;
 
@@ -108,6 +105,8 @@ private:
 	}
 
 public:
+	Memory() = default;
+
 	using pair_offsets_module_vector = std::pair<std::vector<DWORD>, const char*>;
 
 	inline DWORD get_modulebase(const char* _Module) const noexcept
