@@ -7,32 +7,8 @@
 
 #pragma comment (lib, "ntdll.lib")
 
-PPEB GetCurrentPebProcess()
-{
-	PROCESS_BASIC_INFORMATION ProcessInformation{};
-	DWORD ReturnValue;
-
-	NTSTATUS NotOK = NtQueryInformationProcess(GetCurrentProcess(),
-		ProcessBasicInformation, &ProcessInformation, sizeof(PROCESS_BASIC_INFORMATION), &ReturnValue);
-
-	if (NotOK || !ProcessInformation.PebBaseAddress)
-		return nullptr;
-
-	return ProcessInformation.PebBaseAddress;
-}
-
-
-bool BypassDebugging()
-{
-	PPEB ProcessPEB = GetCurrentPebProcess();
-
-	if (!ProcessPEB)
-		return false;
-
-	if (static_cast<size_t>(ProcessPEB->BeingDebugged))
-		ProcessPEB->BeingDebugged = 0;
-	return true;
-}
+PPEB GetCurrentPebProcess();
+bool BypassDebugging();
 
 template <class _Ptr_value_type>
 class _Offset_Ptr
@@ -100,29 +76,14 @@ private:
 	_Ptr_value_type* _ptr;
 };
 
-class signature
-{
-public:
-	signature(DWORD _Offset, size_t _BytesNopCount, const char* _Module = "xrGame.dll")
-		: _nop_bytes{ _BytesNopCount }
-	{
-		_ptr = reinterpret_cast<DWORD*>(reinterpret_cast<DWORD>(GetModuleHandle(_Module)) + _Offset);
-	}
-
-	inline _Offset_Ptr<DWORD> get_ptr() const noexcept { return _ptr; }
-	inline size_t get_nop_bytes() const noexcept { return _nop_bytes; }
-
-	inline signature& set_ptr(const _Offset_Ptr<DWORD>& _Ptr) noexcept { _ptr = _Ptr; return *this; }
-	inline signature& set_nop_bytes(size_t _BytesNopCount) noexcept { _nop_bytes = _BytesNopCount; return *this; }
-
-private:
-	_Offset_Ptr<DWORD> _ptr;
-	size_t _nop_bytes;
-};
-
+class signature;
 constexpr size_t NOP = 0x90;
+
 class Memory
 {
+public:
+	Memory() = default;
+
 private:
 	std::map<std::string, DWORD> _alreadyLoadedModules;
 
@@ -223,10 +184,7 @@ public:
 		return path(*_Ptr, _PathSign, _Size);
 	}
 
-	inline bool path(signature& _Sign, const char* _PathSign, size_t _Size) const noexcept
-	{
-		return path(*_Sign.get_ptr(), _PathSign, _Size);
-	}
+	bool path(signature& _Sign, const char* _PathSign, size_t _Size) const noexcept;
 
 	inline bool nop(DWORD& _Address, size_t _Size) const noexcept
 	{
@@ -245,7 +203,7 @@ public:
 
 	inline bool nop(_Offset_Ptr<DWORD>& _Ptr, size_t _Size) const noexcept { return nop(*_Ptr, _Size); }
 
-	inline bool nop(signature& _Sign) const noexcept { return nop(*_Sign.get_ptr(), _Sign.get_nop_bytes()); }
+	bool nop(signature& _Sign) const noexcept;
 
 	//non secure version of the functions.
 	inline void _path(DWORD& _Address, const char* _PathSign, size_t _Size) const noexcept
@@ -268,10 +226,7 @@ public:
 		_path(*_Ptr, _PathSign, _Size);
 	}
 
-	inline void _path(signature& _Sign, const char* _PathSign, size_t _Size) const noexcept
-	{
-		_path(*_Sign.get_ptr(), _PathSign, _Size);
-	}
+	void _path(signature& _Sign, const char* _PathSign, size_t _Size) const noexcept;
 
 	inline void _nop(DWORD& _Address, size_t _Size) const noexcept
 	{
@@ -287,8 +242,37 @@ public:
 
 	inline void _nop(_Offset_Ptr<DWORD>& _Ptr, size_t _Size) const noexcept { _nop(*_Ptr, _Size); }
 
-	inline void _nop(signature& _Sign, size_t _Size) const noexcept
+	void _nop(signature& _Sign) const noexcept;
+};
+
+class signature
+{
+public:
+	signature(DWORD _Offset, size_t _BytesNopCount, const char* _Module = "xrGame.dll")
+		: _nop_bytes{ _BytesNopCount }
 	{
-		_nop(*_Sign.get_ptr(), _Sign.get_nop_bytes());
+		if (!_mem)
+			_mem = new Memory();
+		_ptr = (*_mem).get_pointer<DWORD>(_Offset, _Module);
 	}
+
+	~signature()
+	{
+		if (_mem)
+		{
+			delete _mem;
+			_mem = nullptr;
+		}
+	}
+
+	inline _Offset_Ptr<DWORD> get_ptr() const noexcept { return _ptr; }
+	inline size_t get_nop_bytes() const noexcept { return _nop_bytes; }
+
+	inline signature& set_ptr(const _Offset_Ptr<DWORD>& _Ptr) noexcept { _ptr = _Ptr; return *this; }
+	inline signature& set_nop_bytes(size_t _BytesNopCount) noexcept { _nop_bytes = _BytesNopCount; return *this; }
+
+private:
+	_Offset_Ptr<DWORD> _ptr;
+	size_t _nop_bytes;
+	static Memory* _mem;
 };

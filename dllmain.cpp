@@ -1,8 +1,6 @@
-﻿
+﻿#define STALKERNET
 
-#define STALKERNET
-
-#include "1337/includes.hpp"
+#include "XR-1337/includes/XR-1337.hpp"
 #include "include/processes.hpp"
 
 /* TODO:

@@ -171,30 +171,31 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="1337\game_vars.hpp" />
-    <ClInclude Include="1337\includes.hpp" />
-    <ClInclude Include="1337\Memory.hpp" />
-    <ClInclude Include="1337\offsets.hpp" />
-    <ClInclude Include="1337\signatures.hpp" />
-    <ClInclude Include="builds\game_varsNET.hpp" />
-    <ClInclude Include="builds\game_varsOMP.hpp" />
-    <ClInclude Include="builds\game_varsXRMPE.hpp" />
-    <ClInclude Include="builds\initializedOffsetsNET.hpp" />
-    <ClInclude Include="builds\initializedOffsetsOMP.hpp" />
-    <ClInclude Include="builds\initializedOffsetsXRMPE.hpp" />
-    <ClInclude Include="builds\offsetsNET.hpp" />
-    <ClInclude Include="builds\offsetsOMP.hpp" />
-    <ClInclude Include="builds\offsetsXRMPE.hpp" />
-    <ClInclude Include="builds\signaturesNET.hpp" />
-    <ClInclude Include="builds\signaturesOMP.hpp" />
-    <ClInclude Include="builds\signaturesXRMPE.hpp" />
     <ClInclude Include="include\handles.hpp" />
     <ClInclude Include="include\processes.hpp" />
+    <ClInclude Include="XR-1337\builds\game_varsNET.hpp" />
+    <ClInclude Include="XR-1337\builds\game_varsOMP.hpp" />
+    <ClInclude Include="XR-1337\builds\game_varsXRMPE.hpp" />
+    <ClInclude Include="XR-1337\builds\initializedOffsetsNET.hpp" />
+    <ClInclude Include="XR-1337\builds\initializedOffsetsOMP.hpp" />
+    <ClInclude Include="XR-1337\builds\initializedOffsetsXRMPE.hpp" />
+    <ClInclude Include="XR-1337\builds\offsetsNET.hpp" />
+    <ClInclude Include="XR-1337\builds\offsetsOMP.hpp" />
+    <ClInclude Include="XR-1337\builds\offsetsXRMPE.hpp" />
+    <ClInclude Include="XR-1337\builds\signaturesNET.hpp" />
+    <ClInclude Include="XR-1337\builds\signaturesOMP.hpp" />
+    <ClInclude Include="XR-1337\builds\signaturesXRMPE.hpp" />
+    <ClInclude Include="XR-1337\includes\game_vars.hpp" />
+    <ClInclude Include="XR-1337\includes\Memory.hpp" />
+    <ClInclude Include="XR-1337\includes\offsets.hpp" />
+    <ClInclude Include="XR-1337\includes\signatures.hpp" />
+    <ClInclude Include="XR-1337\includes\XR-1337.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="include\handles.cpp" />
     <ClCompile Include="include\processes.cpp" />
+    <ClCompile Include="XR-1337\includes\Memory.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
