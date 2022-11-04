@@ -11,13 +11,6 @@ void WINAPI Main(HMODULE hModule)
 {
 	Memory mem;
 
-	signature staminaRunDecSign = signatures::initialized::staminaRunDec;
-	signature staminaJumpDecSign = signatures::initialized::staminaJumpDec;
-	signature weightCheck = signatures::initialized::gameWeightCheck;
-	signature moneyChange = signatures::initialized::moneyChange;
-
-	mem.nop(staminaRunDecSign);
-
 	while (!GetAsyncKeyState(VK_END))
 	{
 		_Offset_Ptr<float> pStamina = mem.get_pointer<float>(offsets::initialized::actor::stamina);
@@ -69,18 +62,18 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call,
 
 	switch (ul_reason_for_call)
 	{
-	case DLL_PROCESS_ATTACH:
-	{
-		HANDLE hThread = CreateThread(nullptr, 0, reinterpret_cast<LPTHREAD_START_ROUTINE>(Main),
-			hModule, 0, nullptr);
-
-		if (!hThread)
+		case DLL_PROCESS_ATTACH:
 		{
-			MessageBox(nullptr, "Can't create the thread", nullptr, MB_ICONERROR);
-			return -1;
+			HANDLE hThread = CreateThread(nullptr, 0, reinterpret_cast<LPTHREAD_START_ROUTINE>(Main),
+				hModule, 0, nullptr);
+
+			if (!hThread)
+			{
+				MessageBox(nullptr, "Can't create the thread", nullptr, MB_ICONERROR);
+				return -1;
+			}
+			SafeCloseHandle(hThread);
 		}
-		SafeCloseHandle(hThread);
-	}
 	}
 
 	return true;
