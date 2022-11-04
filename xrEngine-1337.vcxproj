@@ -176,9 +176,6 @@
     <ClInclude Include="XR-1337\builds\game_varsNET.hpp" />
     <ClInclude Include="XR-1337\builds\game_varsOMP.hpp" />
     <ClInclude Include="XR-1337\builds\game_varsXRMPE.hpp" />
-    <ClInclude Include="XR-1337\builds\initializedOffsetsNET.hpp" />
-    <ClInclude Include="XR-1337\builds\initializedOffsetsOMP.hpp" />
-    <ClInclude Include="XR-1337\builds\initializedOffsetsXRMPE.hpp" />
     <ClInclude Include="XR-1337\builds\offsetsNET.hpp" />
     <ClInclude Include="XR-1337\builds\offsetsOMP.hpp" />
     <ClInclude Include="XR-1337\builds\offsetsXRMPE.hpp" />

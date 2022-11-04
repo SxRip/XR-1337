@@ -42,15 +42,6 @@
     <ClInclude Include="XR-1337\builds\game_varsXRMPE.hpp">
       <Filter>XR-1337\builds</Filter>
     </ClInclude>
-    <ClInclude Include="XR-1337\builds\initializedOffsetsNET.hpp">
-      <Filter>XR-1337\builds</Filter>
-    </ClInclude>
-    <ClInclude Include="XR-1337\builds\initializedOffsetsOMP.hpp">
-      <Filter>XR-1337\builds</Filter>
-    </ClInclude>
-    <ClInclude Include="XR-1337\builds\initializedOffsetsXRMPE.hpp">
-      <Filter>XR-1337\builds</Filter>
-    </ClInclude>
     <ClInclude Include="XR-1337\builds\offsetsNET.hpp">
       <Filter>XR-1337\builds</Filter>
     </ClInclude>

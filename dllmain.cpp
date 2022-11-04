@@ -20,24 +20,24 @@ void WINAPI Main(HMODULE hModule)
 
 	while (!GetAsyncKeyState(VK_END))
 	{
-		_Offset_Ptr<float> pStamina = mem.get_pointer<float>(initialized_offsets::actor::stamina);
-		_Offset_Ptr<float> pHP = mem.get_pointer<float>(initialized_offsets::actor::HP);
-		_Offset_Ptr<float> pWeight = mem.get_pointer<float>(initialized_offsets::actor::weight);
-		_Offset_Ptr<float> pCrosshairDelayInfo = mem.get_pointer<float>(initialized_offsets::actor::crosshairDelayInfo);
-		_Offset_Ptr<float> pFov = mem.get_pointer<float>(initialized_offsets::actor::fov);
+		_Offset_Ptr<float> pStamina = mem.get_pointer<float>(offsets::initialized::actor::stamina);
+		_Offset_Ptr<float> pHP = mem.get_pointer<float>(offsets::initialized::actor::HP);
+		_Offset_Ptr<float> pWeight = mem.get_pointer<float>(offsets::initialized::actor::weight);
+		_Offset_Ptr<float> pCrosshairDelayInfo = mem.get_pointer<float>(offsets::initialized::actor::crosshairDelayInfo);
+		_Offset_Ptr<float> pFov = mem.get_pointer<float>(offsets::initialized::actor::fov);
 
-		_Offset_Ptr<float> pX = mem.get_pointer<float>(initialized_offsets::actor::coordX);
-		_Offset_Ptr<float> pY = mem.get_pointer<float>(initialized_offsets::actor::coordY);
-		_Offset_Ptr<float> pZ = mem.get_pointer<float>(initialized_offsets::actor::coordZ);
+		_Offset_Ptr<float> pX = mem.get_pointer<float>(offsets::initialized::actor::coordX);
+		_Offset_Ptr<float> pY = mem.get_pointer<float>(offsets::initialized::actor::coordY);
+		_Offset_Ptr<float> pZ = mem.get_pointer<float>(offsets::initialized::actor::coordZ);
 
-		_Offset_Ptr<const char> pActorName = mem.get_pointer<const char>(initialized_offsets::actor::name);
+		_Offset_Ptr<const char> pActorName = mem.get_pointer<const char>(offsets::initialized::actor::name);
 
-		_Offset_Ptr<size_t> pActorFireState = mem.get_pointer<size_t>(initialized_offsets::actor::fireState);
-		_Offset_Ptr<size_t> pTargetType = mem.get_pointer<size_t>(initialized_offsets::actor::targetType);
+		_Offset_Ptr<size_t> pActorFireState = mem.get_pointer<size_t>(offsets::initialized::actor::fireState);
+		_Offset_Ptr<size_t> pTargetType = mem.get_pointer<size_t>(offsets::initialized::actor::targetType);
 
-		_Offset_Ptr<int> pMoney = mem.get_pointer<int>(initialized_offsets::actor::money);
+		_Offset_Ptr<int> pMoney = mem.get_pointer<int>(offsets::initialized::actor::money);
 
-		_Offset_Ptr<bool> pWeaponInHands = mem.get_pointer<bool>(initialized_offsets::actor::weaponIsInHands);
+		_Offset_Ptr<bool> pWeaponInHands = mem.get_pointer<bool>(offsets::initialized::actor::weaponIsInHands);
 
 		pStamina = 1;
 
