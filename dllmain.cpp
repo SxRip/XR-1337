@@ -3,9 +3,6 @@
 #include "XR-1337/includes/XR-1337.hpp"
 #include "include/processes.hpp"
 
-/* TODO:
-* Add new sign class for initializing the signatures marked as offsets pointers at this time
-*/
 
 void WINAPI Main(HMODULE hModule)
 {
