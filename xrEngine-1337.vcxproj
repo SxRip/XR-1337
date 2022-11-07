@@ -171,8 +171,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="include\handles.hpp" />
-    <ClInclude Include="include\processes.hpp" />
     <ClInclude Include="XR-1337\builds\game_varsNET.hpp" />
     <ClInclude Include="XR-1337\builds\game_varsOMP.hpp" />
     <ClInclude Include="XR-1337\builds\game_varsXRMPE.hpp" />
@@ -190,8 +188,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="include\handles.cpp" />
-    <ClCompile Include="include\processes.cpp" />
     <ClCompile Include="XR-1337\includes\Memory.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

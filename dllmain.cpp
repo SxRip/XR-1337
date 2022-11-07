@@ -1,7 +1,5 @@
 ﻿#define STALKERNET
-
 #include "XR-1337/includes/XR-1337.hpp"
-#include "include/processes.hpp"
 
 void WINAPI Main(HMODULE hModule)
 {
@@ -35,15 +33,6 @@ void WINAPI Main(HMODULE hModule)
 		if (*pMoney < 1000000)
 			pMoney += 100000;
 
-		if (pWeaponInHands)
-			if (pTargetType == game::target_type::alive)
-				if (pActorFireState == game::fire_state::can_shoot)
-					if (GetForegroundWindowName() == "xrEngine.exe")
-					{
-						mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
-						mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
-					}
-
 		pCrosshairDelayInfo = 1;
 	}
 
@@ -68,7 +57,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call,
 				MessageBox(nullptr, "Can't create the thread", nullptr, MB_ICONERROR);
 				return -1;
 			}
-			SafeCloseHandle(hThread);
+			CloseHandle(hThread);
 		}
 	}
 

@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="include">
-      <UniqueIdentifier>{4b4a5e7d-9896-4851-9f43-4b7662862fa6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="XR-1337">
       <UniqueIdentifier>{b0efc934-07df-47e0-9f0c-64e7ddd5286b}</UniqueIdentifier>
     </Filter>
@@ -27,12 +24,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\handles.hpp">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\processes.hpp">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="XR-1337\builds\game_varsNET.hpp">
       <Filter>XR-1337\builds</Filter>
     </ClInclude>
@@ -79,12 +70,6 @@
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
       <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="include\handles.cpp">
-      <Filter>include</Filter>
-    </ClCompile>
-    <ClCompile Include="include\processes.cpp">
-      <Filter>include</Filter>
     </ClCompile>
     <ClCompile Include="XR-1337\includes\Memory.cpp">
       <Filter>XR-1337\includes</Filter>
