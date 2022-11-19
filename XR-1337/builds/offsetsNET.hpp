@@ -17,11 +17,19 @@ constexpr DWORD dwCoordX = 0xBC;
 constexpr DWORD dwCoordY = 0xC0;
 constexpr DWORD dwCoordZ = 0xC4;
 constexpr DWORD dwWeaponSelected = 0x14;
+constexpr DWORD dwPlayerStateStep = 0x3E4;
+constexpr DWORD dwPlayerStateStep2 = 0xA4;
+constexpr DWORD dwPlayerStateStep3 = 0x1C;
+constexpr DWORD dwPlayerState = 0x34E;
 
 namespace initialized
 {
 	namespace actor
 	{
+
+		offset_module player_state = _Init_offset({ signatures::dwActor, dwPlayerStateStep,
+			dwPlayerStateStep2, dwPlayerStateStep3, dwPlayerState });
+
 		offset_module name = _Init_offset({ signatures::dwActor, offsets::dwName });
 
 		offset_module stamina = _Init_offset({ signatures::dwActor,

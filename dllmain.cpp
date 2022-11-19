@@ -8,7 +8,9 @@ void WINAPI Main(HMODULE hModule)
 {
 	Memory mem;
 
-	while (!GetAsyncKeyState(VK_END))
+	mem.nop(signatures::initialized::moneyChange);
+
+	/*while (!GetAsyncKeyState(VK_END))
 	{
 		_Offset_Ptr<float> pStamina = mem.get_pointer<float>(offsets::initialized::actor::stamina);
 		_Offset_Ptr<float> pHP = mem.get_pointer<float>(offsets::initialized::actor::HP);
@@ -24,6 +26,7 @@ void WINAPI Main(HMODULE hModule)
 
 		_Offset_Ptr<size_t> pActorFireState = mem.get_pointer<size_t>(offsets::initialized::actor::fireState);
 		_Offset_Ptr<size_t> pTargetType = mem.get_pointer<size_t>(offsets::initialized::actor::targetType);
+		_Offset_Ptr<size_t> pPlayerState = mem.get_pointer<size_t>(offsets::initialized::actor::player_state);
 
 		_Offset_Ptr<int> pMoney = mem.get_pointer<int>(offsets::initialized::actor::money);
 
@@ -45,8 +48,17 @@ void WINAPI Main(HMODULE hModule)
 						mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
 					}
 
+		if (pPlayerState != game::player_state::flying && pPlayerState != 
+			game::player_state::flyingWithStaminaWaste && GetAsyncKeyState(VK_SPACE))
+		{
+			pPlayerState = 1;
+			pPlayerState = 256;
+			Sleep(50);
+			pPlayerState = 0;
+		}
+
 		pCrosshairDelayInfo = 1;
-	}
+	}*/
 
 	FreeLibraryAndExitThread(hModule, 0);
 }

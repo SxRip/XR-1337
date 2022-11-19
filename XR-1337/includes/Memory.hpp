@@ -57,6 +57,11 @@ public:
 		return false;
 	}
 
+	inline bool operator!=(_Ptr_value_type _Val) const
+	{
+		return !(this->operator==(_Val));
+	}
+
 	inline bool operator==(const _Offset_Ptr& _Ptr) const noexcept
 	{
 		return _Ptr._ptr == _ptr;
