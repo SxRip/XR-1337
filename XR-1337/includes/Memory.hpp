@@ -7,6 +7,9 @@
 
 #pragma comment (lib, "ntdll.lib")
 
+#pragma warning (disable : 4311)
+#pragma warning (disable : 4302)
+
 PPEB GetCurrentPebProcess();
 bool BypassDebugging();
 
@@ -162,7 +165,7 @@ public:
 		if (!dwClientBase)
 			return nullptr;
 
-		return reinterpret_cast<_Ptr_value_type*>(dwClientBase + _Offset);
+		return reinterpret_cast<_Ptr_value_type*>(static_cast<__int64>(dwClientBase) + _Offset);
 	}
 
 	inline bool path(DWORD& _Address, const char* _PathSign, size_t _Size) const noexcept

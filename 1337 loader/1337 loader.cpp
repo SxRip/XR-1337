@@ -65,7 +65,7 @@ int main()
 		return -2;
 	}
 
-	const auto slash_animation = [](size_t _Delay)
+	const auto slash_animation = [](DWORD _Delay)
 	{
 		std::cout << "\b\\" << std::flush;
 		Sleep(_Delay);
