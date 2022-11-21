@@ -22,35 +22,17 @@
     <Filter Include="XR-1337\includes">
       <UniqueIdentifier>{b1dcddfa-63df-46e5-8d2d-d11ed97d2ea0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="XR-1337\builds\signatures">
+      <UniqueIdentifier>{b8906b66-3a11-4f64-b491-e0333240edb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="XR-1337\builds\vars">
+      <UniqueIdentifier>{ebfe631d-a318-4ed3-9f72-75dd50d3b855}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="XR-1337\builds\offsets">
+      <UniqueIdentifier>{d061d340-6716-4882-a04e-826b59f1093f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="XR-1337\builds\game_varsNET.hpp">
-      <Filter>XR-1337\builds</Filter>
-    </ClInclude>
-    <ClInclude Include="XR-1337\builds\game_varsOMP.hpp">
-      <Filter>XR-1337\builds</Filter>
-    </ClInclude>
-    <ClInclude Include="XR-1337\builds\game_varsXRMPE.hpp">
-      <Filter>XR-1337\builds</Filter>
-    </ClInclude>
-    <ClInclude Include="XR-1337\builds\offsetsNET.hpp">
-      <Filter>XR-1337\builds</Filter>
-    </ClInclude>
-    <ClInclude Include="XR-1337\builds\offsetsOMP.hpp">
-      <Filter>XR-1337\builds</Filter>
-    </ClInclude>
-    <ClInclude Include="XR-1337\builds\offsetsXRMPE.hpp">
-      <Filter>XR-1337\builds</Filter>
-    </ClInclude>
-    <ClInclude Include="XR-1337\builds\signaturesNET.hpp">
-      <Filter>XR-1337\builds</Filter>
-    </ClInclude>
-    <ClInclude Include="XR-1337\builds\signaturesOMP.hpp">
-      <Filter>XR-1337\builds</Filter>
-    </ClInclude>
-    <ClInclude Include="XR-1337\builds\signaturesXRMPE.hpp">
-      <Filter>XR-1337\builds</Filter>
-    </ClInclude>
     <ClInclude Include="XR-1337\includes\game_vars.hpp">
       <Filter>XR-1337\includes</Filter>
     </ClInclude>
@@ -65,6 +47,33 @@
     </ClInclude>
     <ClInclude Include="XR-1337\includes\XR-1337.hpp">
       <Filter>XR-1337\includes</Filter>
+    </ClInclude>
+    <ClInclude Include="XR-1337\builds\signaturesNET.hpp">
+      <Filter>XR-1337\builds\signatures</Filter>
+    </ClInclude>
+    <ClInclude Include="XR-1337\builds\signaturesOMP.hpp">
+      <Filter>XR-1337\builds\signatures</Filter>
+    </ClInclude>
+    <ClInclude Include="XR-1337\builds\signaturesXRMPE.hpp">
+      <Filter>XR-1337\builds\signatures</Filter>
+    </ClInclude>
+    <ClInclude Include="XR-1337\builds\game_varsNET.hpp">
+      <Filter>XR-1337\builds\vars</Filter>
+    </ClInclude>
+    <ClInclude Include="XR-1337\builds\game_varsOMP.hpp">
+      <Filter>XR-1337\builds\vars</Filter>
+    </ClInclude>
+    <ClInclude Include="XR-1337\builds\game_varsXRMPE.hpp">
+      <Filter>XR-1337\builds\vars</Filter>
+    </ClInclude>
+    <ClInclude Include="XR-1337\builds\offsetsNET.hpp">
+      <Filter>XR-1337\builds\offsets</Filter>
+    </ClInclude>
+    <ClInclude Include="XR-1337\builds\offsetsOMP.hpp">
+      <Filter>XR-1337\builds\offsets</Filter>
+    </ClInclude>
+    <ClInclude Include="XR-1337\builds\offsetsXRMPE.hpp">
+      <Filter>XR-1337\builds\offsets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
