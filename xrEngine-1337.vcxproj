@@ -171,6 +171,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="1337 loader\include\handles.hpp" />
+    <ClInclude Include="1337 loader\include\processes.hpp" />
     <ClInclude Include="XR-1337\builds\game_varsNET.hpp" />
     <ClInclude Include="XR-1337\builds\game_varsOMP.hpp" />
     <ClInclude Include="XR-1337\builds\game_varsXRMPE.hpp" />
@@ -187,6 +189,7 @@
     <ClInclude Include="XR-1337\includes\XR-1337.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="1337 loader\include\processes.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="XR-1337\includes\Memory.cpp" />
   </ItemGroup>
