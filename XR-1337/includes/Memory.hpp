@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <memory>
 #include <Windows.h>
 #include <winternl.h>
 #include <map>
@@ -259,17 +260,8 @@ public:
 		: _nop_bytes{ _BytesNopCount }
 	{
 		if (!_mem)
-			_mem = new Memory();
+			_mem = std::make_unique<Memory>();
 		_ptr = (*_mem).get_pointer<DWORD>(_Offset, _Module);
-	}
-
-	~signature()
-	{
-		if (_mem)
-		{
-			delete _mem;
-			_mem = nullptr;
-		}
 	}
 
 	inline _Offset_Ptr<DWORD> get_ptr() const noexcept { return _ptr; }
@@ -281,5 +273,5 @@ public:
 private:
 	_Offset_Ptr<DWORD> _ptr;
 	size_t _nop_bytes;
-	static Memory* _mem;
+	static std::unique_ptr<Memory> _mem;
 };
