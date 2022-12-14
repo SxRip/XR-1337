@@ -1,6 +1,6 @@
 #include "Memory.hpp"
 
-Memory* signature::_mem = nullptr;
+std::unique_ptr<Memory> signature::_mem = {};
 
 bool BypassDebugging()
 {
