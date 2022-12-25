@@ -1,5 +1,4 @@
-﻿#include "include/ConsoleMessages.h"
-#include "xr-1337.hpp"
+﻿#include "xr-1337.hpp"
 #include <fstream>
 
 INJECT_DATA GetDllNameToInject()
@@ -29,9 +28,8 @@ INJECT_DATA GetDllNameToInject()
 	return inject_data;
 }
 
-int main()
+INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstPrev, CHAR* Args, int nCmdShow)
 {
-	SetConsoleTitle("1337 LOADER");
 
 	INJECT_DATA inject_data;
 	bool is_created = false;
@@ -40,8 +38,8 @@ int main()
 	{
 		if (!create_config(inject_data))
 		{
-			ColoredMessage("Can't create the config file!", MsgColor::LRED, true);
-			Sleep(5000);
+			/*ColoredMessage("Can't create the config file!", MsgColor::LRED, true);
+			Sleep(5000);*/
 			return -2;
 		}
 		is_created = true;
@@ -60,12 +58,12 @@ int main()
 
 	if (!std::filesystem::exists(inject_data.dll_name))
 	{
-		ColoredMessage("The cheat file wasn't found!", MsgColor::LRED, true);
+		/*ColoredMessage("The cheat file wasn't found!", MsgColor::LRED, true);*/
 		Sleep(5000);
 		return -2;
 	}
 
-	const auto slash_animation = [](DWORD _Delay)
+	/*const auto slash_animation = [](DWORD _Delay)
 	{
 		std::cout << "\b\\" << std::flush;
 		Sleep(_Delay);
@@ -78,27 +76,27 @@ int main()
 
 		std::cout << "\b-" << std::flush;
 		Sleep(_Delay);
-	};
+	};*/
 
-	std::cout << "\n\n\tThe dll to inject: "; ColoredMessage(simple_dllname.c_str(), LRED, true);
-	std::cout << "\n\tWaiting for a client: "; ColoredMessage("xrEngine.exe  ", MsgColor::LYELLOW);
+	/*std::cout << "\n\n\tThe dll to inject: "; ColoredMessage(simple_dllname.c_str(), LRED, true);
+	std::cout << "\n\tWaiting for a client: "; ColoredMessage("xrEngine.exe  ", MsgColor::LYELLOW);*/
 	//ColoredMessage("\n\tPress SPACE to change injection method", LYELLOW, true);
 
 	handle_ptr<CloseHandle> hGame;
 	while (!(hGame = GetGameProcessHandle(PROCESS_ALL_ACCESS)))
-		slash_animation(50);
+		/*slash_animation(50);*/
 
 	system("cls");
 
-	ColoredMessage("\n\tInjecting...", LYELLOW, true);
+	/*ColoredMessage("\n\tInjecting...", LYELLOW, true);*/
 	if (Inject(hGame.get(), inject_data.dll_name.c_str()) != INJECT_STATUS::OK)
 	{
-		ColoredMessage("\n\tError injecting!", LRED, true);
-		Sleep(5000);
+		/*ColoredMessage("\n\tError injecting!", LRED, true);
+		Sleep(5000);*/
 		return -3;
 	}
 
-	ColoredMessage("\n\tInjected!", MsgColor::LGREEN, true);
+	//ColoredMessage("\n\tInjected!", MsgColor::LGREEN, true);
 	Sleep(5000);
 	return 0;
 }
