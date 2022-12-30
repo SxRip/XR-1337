@@ -1,102 +1,44 @@
 ﻿#include "xr-1337.hpp"
+#include "imgui/imgui.h"
+#include "imgui/imgui_impl_dx9.h"
+#include "imgui/imgui_impl_win32.h"
 #include <fstream>
 
-INJECT_DATA GetDllNameToInject()
+
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
+LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-	std::ifstream config("config.ini");
-	if (!config.is_open())
-		return {};
+	ImGui_ImplWin32_WndProcHandler(hwnd, msg, wParam, lParam);
 
-	INJECT_DATA inject_data;
-
-	std::string buff;
-	while (!config.eof())
+	switch (msg)
 	{
-		config >> buff;
-		if (buff == "METHOD]")
-		{
-			config >> buff;
-			inject_data.inject_method = buff;
-		}
-
-		if (buff == "NAME]")
-		{
-			config >> buff;
-			inject_data.dll_name = buff;
-		}
+	case WM_CLOSE:
+		PostQuitMessage(0);
+		break;
 	}
-	return inject_data;
+
+	return DefWindowProc(hwnd, msg, wParam, lParam);
 }
 
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstPrev, CHAR* Args, int nCmdShow)
 {
+	config config;
 
-	INJECT_DATA inject_data;
-	bool is_created = false;
-
-	if (!std::filesystem::exists("config.ini"))
+	if (config.already_created())
 	{
-		if (!create_config(inject_data))
-		{
-			/*ColoredMessage("Can't create the config file!", MsgColor::LRED, true);
-			Sleep(5000);*/
-			return -2;
-		}
-		is_created = true;
+		if (!config.open() || !config.update())
+			MessageBox(nullptr, "Can't update the config", nullptr, MB_ICONERROR);
 	}
-
-	if (!is_created)
-		inject_data = GetDllNameToInject();
-
-	std::filesystem::path extension = inject_data.dll_name;
-	if (extension.extension().string().empty())
-		inject_data.dll_name.append(".dll");
-
-
-	std::string simple_dllname = inject_data.dll_name;
-	inject_data.dll_name = GetFullPathNear(inject_data.dll_name.c_str());
-
-	if (!std::filesystem::exists(inject_data.dll_name))
-	{
-		/*ColoredMessage("The cheat file wasn't found!", MsgColor::LRED, true);*/
-		Sleep(5000);
-		return -2;
-	}
-
-	/*const auto slash_animation = [](DWORD _Delay)
-	{
-		std::cout << "\b\\" << std::flush;
-		Sleep(_Delay);
-
-		std::cout << "\b|" << std::flush;
-		Sleep(_Delay);
-
-		std::cout << "\b/" << std::flush;
-		Sleep(_Delay);
-
-		std::cout << "\b-" << std::flush;
-		Sleep(_Delay);
-	};*/
-
-	/*std::cout << "\n\n\tThe dll to inject: "; ColoredMessage(simple_dllname.c_str(), LRED, true);
-	std::cout << "\n\tWaiting for a client: "; ColoredMessage("xrEngine.exe  ", MsgColor::LYELLOW);*/
-	//ColoredMessage("\n\tPress SPACE to change injection method", LYELLOW, true);
+	else
+		if (!config.create())
+			MessageBox(nullptr, "Can't create a config file", nullptr, MB_ICONERROR);
 
 	handle_ptr<CloseHandle> hGame;
-	while (!(hGame = GetGameProcessHandle(PROCESS_ALL_ACCESS)))
-		/*slash_animation(50);*/
+	while (!(hGame = GetGameProcessHandle(PROCESS_ALL_ACCESS))) {}
 
-	system("cls");
+	if (Inject(hGame.get(), config.get_dll().c_str()) != INJECT_STATUS::OK)
+		MessageBox(nullptr, "Can't inject the dll in the process", nullptr, MB_ICONERROR);
 
-	/*ColoredMessage("\n\tInjecting...", LYELLOW, true);*/
-	if (Inject(hGame.get(), inject_data.dll_name.c_str()) != INJECT_STATUS::OK)
-	{
-		/*ColoredMessage("\n\tError injecting!", LRED, true);
-		Sleep(5000);*/
-		return -3;
-	}
-
-	//ColoredMessage("\n\tInjected!", MsgColor::LGREEN, true);
-	Sleep(5000);
 	return 0;
 }
