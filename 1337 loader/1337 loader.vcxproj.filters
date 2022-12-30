@@ -19,6 +19,12 @@
     <Filter Include="imgui">
       <UniqueIdentifier>{2cbee231-a3fa-4243-96c0-a408a6bd379f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="config">
+      <UniqueIdentifier>{875f9058-e77c-4814-bddc-f2d80b8b5bed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="window">
+      <UniqueIdentifier>{54562133-71a0-49f9-8323-bcf6748988cc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="1337 loader.cpp">
@@ -49,7 +55,10 @@
       <Filter>imgui</Filter>
     </ClCompile>
     <ClCompile Include="config.cpp">
-      <Filter>Исходные файлы</Filter>
+      <Filter>config</Filter>
+    </ClCompile>
+    <ClCompile Include="window.cpp">
+      <Filter>window</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -60,9 +69,6 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="xr-1337.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="imgui\imconfig.h">
@@ -90,7 +96,13 @@
       <Filter>imgui</Filter>
     </ClInclude>
     <ClInclude Include="config.hpp">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>config</Filter>
+    </ClInclude>
+    <ClInclude Include="window.hpp">
+      <Filter>window</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Файлы ресурсов</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
