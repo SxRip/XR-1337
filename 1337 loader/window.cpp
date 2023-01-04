@@ -2,6 +2,10 @@
 
 window::window(int x, int y, const char* name) : _class{ GetModuleHandle(nullptr), "Loader" }
 {
+	_name = name;
+	_x = static_cast<float>(x);
+	_y = static_cast<float>(y);
+
 	RECT rc{ 0, 0, x, y };
 
 	VERIFY(AdjustWindowRect(&rc, WS_POPUP, false));
@@ -14,12 +18,25 @@ window::window(int x, int y, const char* name) : _class{ GetModuleHandle(nullptr
 
 	VERIFY(_hwnd);
 
+	gfx.create(_hwnd);
+
 	ShowWindow(_hwnd, SW_SHOWDEFAULT);
 	UpdateWindow(_hwnd);
 }
 
+void window::begin() const
+{
+	gfx.begin();
+}
+
+void window::end() const
+{
+	gfx.end();
+}
+
 LRESULT window::WndMsgSetup(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept
 {
+	ImGui_ImplWin32_WndProcHandler(hwnd, msg, wParam, lParam);
 	switch (msg)
 	{
 		case WM_NCCREATE:
@@ -47,11 +64,17 @@ LRESULT window::WndHandleThunk(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam
 
 LRESULT window::WndMsgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept
 {
+	ImGui_ImplWin32_WndProcHandler(hwnd, msg, wParam, lParam);
+
 	switch (msg)
 	{
 	case WM_CLOSE:
 		PostQuitMessage(0);
 		break;
+
+	case WM_SYSCOMMAND:
+		if ((lParam & 0xfff0) == SC_KEYMENU)
+			return 0;
 	}
 
 	return DefWindowProc(hwnd, msg, wParam, lParam);

@@ -1,16 +1,7 @@
 #pragma once
-#include "imgui/imgui.h"
-#include "imgui/imgui_impl_dx9.h"
-#include "imgui/imgui_impl_win32.h"
-#include <d3d9.h>
 #include <Windows.h>
-#include <exception>
-
-#pragma comment(lib, "d3d9.lib")
-
-#define VERIFY(call) if(!call) throw std::exception("error")
-
-extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+#include "exception.hpp"
+#include "graphics.hpp"
 
 class window
 {
@@ -39,14 +30,25 @@ public:
 
 	window(int x, int y, const char* name);
 
+	inline HWND get_window() const noexcept { return _hwnd; }
+
+	void begin() const;
+	void end() const;
+
+	inline float get_x() const noexcept { return _x; }
+	inline float get_y() const noexcept { return _y; }
+	inline const char* get_name() const noexcept { return _name; }
+
+private:
 	static LRESULT CALLBACK WndMsgSetup(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
 	static LRESULT CALLBACK WndHandleThunk(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
 
 	LRESULT CALLBACK WndMsgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
 
-private:
 	_window_class _class;
-
 	HWND _hwnd;
-};
+	graphics gfx;
 
+	const char* _name;
+	float _x, _y;
+};

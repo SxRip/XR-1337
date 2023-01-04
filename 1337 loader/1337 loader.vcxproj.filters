@@ -25,6 +25,9 @@
     <Filter Include="window">
       <UniqueIdentifier>{54562133-71a0-49f9-8323-bcf6748988cc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="graphics">
+      <UniqueIdentifier>{8c7d8400-987e-4c53-b582-7e5aeecdf00a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="1337 loader.cpp">
@@ -59,6 +62,9 @@
     </ClCompile>
     <ClCompile Include="window.cpp">
       <Filter>window</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics.cpp">
+      <Filter>graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -103,6 +109,12 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Файлы ресурсов</Filter>
+    </ClInclude>
+    <ClInclude Include="exception.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics.hpp">
+      <Filter>graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
