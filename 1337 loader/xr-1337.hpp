@@ -5,6 +5,7 @@
 #include <filesystem>
 #include <fstream>
 #include "include/processes.hpp"
+#include "config.hpp"
 
 std::string stalker_process = "xrEngine.exe";
 std::string stalker_dedicated_path = "dedicated";
@@ -53,49 +54,6 @@ inline HANDLE GetGameProcessHandle(DWORD dwAccess)
 		return OpenProcess(dwAccess, false, _ProcessID);
 
 	return nullptr;
-}
-
-inline std::string GetFullPathNear(const char* _File)
-{
-	std::string _Path_with_file = std::filesystem::current_path().string();
-
-	_Path_with_file.append("\\");
-	_Path_with_file.append(_File);
-	return _Path_with_file;
-}
-
-typedef struct _INJECT_DATA
-{
-	std::string dll_name;
-	std::string inject_method;
-} INJECT_DATA;
-
-enum class INJECT_STATUS
-{
-	OK,
-	ERROR_MEMORY_ALLOCATION,
-	ERROR_MEMORY_WRITING,
-	ERROR_CREATING_REMOTE_THREAD
-};
-
-inline bool create_config(INJECT_DATA& inject_data, const char* inject_method = nullptr,
-	const char* dll_name = nullptr)
-{
-	std::fstream config("config.ini", std::fstream::app);
-	if (!config.is_open())
-		return false;
-
-	const char* inject_mthd = inject_method ? inject_method : "STANDARD";
-	const char* dll = dll_name ? dll_name : "xrEngine-1337.dll";
-
-	config << "[INJECT METHOD] " << inject_mthd << std::endl;
-	config << "[THE DLL NAME] " << dll << std::endl;
-
-	inject_data.inject_method = inject_mthd;
-	inject_data.dll_name = dll;
-
-	config.close();
-	return true;
 }
 
 INJECT_STATUS Inject(HANDLE hGame, const char* cDllPath)

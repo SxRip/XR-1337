@@ -1,104 +1,53 @@
-﻿#include "include/ConsoleMessages.h"
-#include "xr-1337.hpp"
-#include <fstream>
+﻿#include "xr-1337.hpp"
+#include "config.hpp"
+#include "window.hpp"
 
-INJECT_DATA GetDllNameToInject()
+INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstPrev, CHAR* Args, int nCmdShow)
 {
-	std::ifstream config("config.ini");
-	if (!config.is_open())
-		return {};
+	window wnd(500, 500, "[XR-1337] LOADER (CREATED BY SXRIR)");
 
-	INJECT_DATA inject_data;
+	config config;
 
-	std::string buff;
-	while (!config.eof())
+	if (config.already_created())
 	{
-		config >> buff;
-		if (buff == "METHOD]")
+		if (!config.open() || !config.update())
+			MessageBox(nullptr, "Can't update the config", nullptr, MB_ICONERROR);
+	}
+	else
+		if (!config.create())
+			MessageBox(nullptr, "Can't create a config file", nullptr, MB_ICONERROR);
+
+	bool no_closed = true;
+
+	MSG msg;
+	while (no_closed)
+	{
+		while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 		{
-			config >> buff;
-			inject_data.inject_method = buff;
+			if (msg.message == WM_QUIT)
+				return 0;
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
 		}
 
-		if (buff == "NAME]")
-		{
-			config >> buff;
-			inject_data.dll_name = buff;
-		}
-	}
-	return inject_data;
-}
+		wnd.begin();
 
-int main()
-{
-	SetConsoleTitle("1337 LOADER");
+		ImGui::SetNextWindowPos({});
+		ImGui::SetNextWindowSize({ wnd.get_x(), wnd.get_y() });
 
-	INJECT_DATA inject_data;
-	bool is_created = false;
+		if (ImGui::Begin(wnd.get_name(), &no_closed, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse))
+			ImGui::Button("1337 loader");
+		ImGui::End();
 
-	if (!std::filesystem::exists("config.ini"))
-	{
-		if (!create_config(inject_data))
-		{
-			ColoredMessage("Can't create the config file!", MsgColor::LRED, true);
-			Sleep(5000);
-			return -2;
-		}
-		is_created = true;
+		wnd.end();
 	}
 
-	if (!is_created)
-		inject_data = GetDllNameToInject();
 
-	std::filesystem::path extension = inject_data.dll_name;
-	if (extension.extension().string().empty())
-		inject_data.dll_name.append(".dll");
+	//handle_ptr<CloseHandle> hGame;
+	//while (!(hGame = GetGameProcessHandle(PROCESS_ALL_ACCESS))) {}
 
+	//if (Inject(hGame.get(), config.get_dll().c_str()) != INJECT_STATUS::OK)
+	//	MessageBox(nullptr, "Can't inject the dll in the process", nullptr, MB_ICONERROR);
 
-	std::string simple_dllname = inject_data.dll_name;
-	inject_data.dll_name = GetFullPathNear(inject_data.dll_name.c_str());
-
-	if (!std::filesystem::exists(inject_data.dll_name))
-	{
-		ColoredMessage("The cheat file wasn't found!", MsgColor::LRED, true);
-		Sleep(5000);
-		return -2;
-	}
-
-	const auto slash_animation = [](DWORD _Delay)
-	{
-		std::cout << "\b\\" << std::flush;
-		Sleep(_Delay);
-
-		std::cout << "\b|" << std::flush;
-		Sleep(_Delay);
-
-		std::cout << "\b/" << std::flush;
-		Sleep(_Delay);
-
-		std::cout << "\b-" << std::flush;
-		Sleep(_Delay);
-	};
-
-	std::cout << "\n\n\tThe dll to inject: "; ColoredMessage(simple_dllname.c_str(), LRED, true);
-	std::cout << "\n\tWaiting for a client: "; ColoredMessage("xrEngine.exe  ", MsgColor::LYELLOW);
-	//ColoredMessage("\n\tPress SPACE to change injection method", LYELLOW, true);
-
-	handle_ptr<CloseHandle> hGame;
-	while (!(hGame = GetGameProcessHandle(PROCESS_ALL_ACCESS)))
-		slash_animation(50);
-
-	system("cls");
-
-	ColoredMessage("\n\tInjecting...", LYELLOW, true);
-	if (Inject(hGame.get(), inject_data.dll_name.c_str()) != INJECT_STATUS::OK)
-	{
-		ColoredMessage("\n\tError injecting!", LRED, true);
-		Sleep(5000);
-		return -3;
-	}
-
-	ColoredMessage("\n\tInjected!", MsgColor::LGREEN, true);
-	Sleep(5000);
 	return 0;
 }
