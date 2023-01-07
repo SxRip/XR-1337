@@ -4,7 +4,7 @@
 
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstPrev, CHAR* Args, int nCmdShow)
 {
-	window wnd(1000, 500, "1337 loader");
+	window wnd(500, 500, "[XR-1337] LOADER (CREATED BY SXRIR)");
 
 	config config;
 
@@ -33,7 +33,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstPrev, CHAR* Args, int nCm
 		wnd.begin();
 
 		ImGui::SetNextWindowPos({});
-		ImGui::SetWindowSize({ wnd.get_x(), wnd.get_y() });
+		ImGui::SetNextWindowSize({ wnd.get_x(), wnd.get_y() });
 
 		if (ImGui::Begin(wnd.get_name(), &no_closed, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse))
 			ImGui::Button("1337 loader");

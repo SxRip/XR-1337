@@ -161,7 +161,7 @@
   <ItemGroup>
     <ClCompile Include="1337 loader.cpp" />
     <ClCompile Include="config.cpp" />
-    <ClCompile Include="graphics.cpp" />
+    <ClCompile Include="render.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
     <ClCompile Include="imgui\imgui_demo.cpp" />
     <ClCompile Include="imgui\imgui_draw.cpp" />
@@ -175,7 +175,7 @@
   <ItemGroup>
     <ClInclude Include="config.hpp" />
     <ClInclude Include="exception.hpp" />
-    <ClInclude Include="graphics.hpp" />
+    <ClInclude Include="render.hpp" />
     <ClInclude Include="imgui\imconfig.h" />
     <ClInclude Include="imgui\imgui.h" />
     <ClInclude Include="imgui\imgui_impl_dx9.h" />

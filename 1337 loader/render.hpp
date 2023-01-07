@@ -10,17 +10,17 @@
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-class graphics
+class render
 {
 public:
 
-	graphics(const graphics&) = delete;
-	graphics operator=(const graphics&&) = delete;
+	render(const render&) = delete;
+	render operator=(const render&&) = delete;
 
-	graphics() = default;
-	~graphics();
+	render() = default;
+	~render();
 
-	graphics(HWND hwnd);
+	render(HWND hwnd);
 
 	void create(HWND hwnd);
 

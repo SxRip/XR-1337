@@ -1,6 +1,6 @@
-#include "graphics.hpp"
+#include "render.hpp"
 
-graphics::~graphics()
+render::~render()
 {
 	ImGui_ImplDX9_Shutdown();
 	ImGui_ImplWin32_Shutdown();
@@ -8,12 +8,12 @@ graphics::~graphics()
 	ImGui::DestroyContext();
 }
 
-graphics::graphics(HWND hwnd)
+render::render(HWND hwnd)
 {
 	create(hwnd);
 }
 
-void graphics::create(HWND hwnd)
+void render::create(HWND hwnd)
 {
 	_pD3D = Direct3DCreate9(D3D_SDK_VERSION);
 
@@ -21,8 +21,8 @@ void graphics::create(HWND hwnd)
 
 	D3DPRESENT_PARAMETERS params{ sizeof(D3DPRESENT_PARAMETERS) };
 
-	D3DDISPLAYMODE display_mode;
-	VERIFYD3D(_pD3D->GetAdapterDisplayMode(D3DADAPTER_DEFAULT, &display_mode));
+	D3DDISPLAYMODE display;
+	VERIFYD3D(_pD3D->GetAdapterDisplayMode(D3DADAPTER_DEFAULT, &display));
 
 	RECT rc{};
 
@@ -30,7 +30,7 @@ void graphics::create(HWND hwnd)
 
 	params.Windowed = true;
 	params.hDeviceWindow = hwnd;
-	params.BackBufferFormat = display_mode.Format;
+	params.BackBufferFormat = display.Format;
 	params.BackBufferWidth = rc.right - rc.left;
 	params.BackBufferHeight = rc.bottom - rc.top;
 	params.BackBufferCount = 1;
@@ -38,6 +38,10 @@ void graphics::create(HWND hwnd)
 
 	VERIFYD3D(_pD3D->CreateDevice(D3DADAPTER_DEFAULT,
 		D3DDEVTYPE::D3DDEVTYPE_HAL, hwnd, D3DCREATE_MIXED_VERTEXPROCESSING, &params, &_pDevice));
+
+	VERIFYD3D(_pDevice->SetRenderState(D3DRENDERSTATETYPE::D3DRS_ZENABLE, D3DZB_FALSE));
+	VERIFYD3D(_pDevice->SetRenderState(D3DRENDERSTATETYPE::D3DRS_ZWRITEENABLE, false));
+	VERIFYD3D(_pDevice->SetRenderState(D3DRENDERSTATETYPE::D3DRS_CULLMODE, D3DCULL_CW));
 
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -47,7 +51,7 @@ void graphics::create(HWND hwnd)
 	ImGui::StyleColorsDark();
 }
 
-void graphics::begin() const
+void render::begin() const
 {
 	VERIFYD3D(_pDevice->BeginScene());
 
@@ -56,7 +60,7 @@ void graphics::begin() const
 	ImGui::NewFrame();
 }
 
-void graphics::end() const
+void render::end() const
 {
 	ImGui::EndFrame();
 
@@ -67,7 +71,7 @@ void graphics::end() const
 	VERIFYD3D(_pDevice->Present(nullptr, nullptr, nullptr, nullptr));
 }
 
-void graphics::clear(D3DCOLOR color) const
+void render::clear(D3DCOLOR color) const
 {
 	VERIFYD3D(_pDevice->Clear(0, 0, D3DCLEAR_TARGET, color, 1.f, 0));
 }

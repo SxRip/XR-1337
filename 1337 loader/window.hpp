@@ -1,7 +1,7 @@
 #pragma once
 #include <Windows.h>
 #include "exception.hpp"
-#include "graphics.hpp"
+#include "render.hpp"
 
 class window
 {
@@ -24,6 +24,7 @@ class window
 
 public:
 	window() = default;
+	~window() { if (_hwnd) DestroyWindow(_hwnd); }
 
 	window(const window&) = delete;
 	window operator=(const window&&) = delete;
@@ -47,7 +48,7 @@ private:
 
 	_window_class _class;
 	HWND _hwnd;
-	graphics gfx;
+	render _gfx;
 
 	const char* _name;
 	float _x, _y;

@@ -25,7 +25,7 @@
     <Filter Include="window">
       <UniqueIdentifier>{54562133-71a0-49f9-8323-bcf6748988cc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="graphics">
+    <Filter Include="render">
       <UniqueIdentifier>{8c7d8400-987e-4c53-b582-7e5aeecdf00a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -63,8 +63,8 @@
     <ClCompile Include="window.cpp">
       <Filter>window</Filter>
     </ClCompile>
-    <ClCompile Include="graphics.cpp">
-      <Filter>graphics</Filter>
+    <ClCompile Include="render.cpp">
+      <Filter>render</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -113,8 +113,8 @@
     <ClInclude Include="exception.hpp">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="graphics.hpp">
-      <Filter>graphics</Filter>
+    <ClInclude Include="render.hpp">
+      <Filter>render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

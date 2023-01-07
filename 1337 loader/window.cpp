@@ -18,7 +18,7 @@ window::window(int x, int y, const char* name) : _class{ GetModuleHandle(nullptr
 
 	VERIFY(_hwnd);
 
-	gfx.create(_hwnd);
+	_gfx.create(_hwnd);
 
 	ShowWindow(_hwnd, SW_SHOWDEFAULT);
 	UpdateWindow(_hwnd);
@@ -26,12 +26,12 @@ window::window(int x, int y, const char* name) : _class{ GetModuleHandle(nullptr
 
 void window::begin() const
 {
-	gfx.begin();
+	_gfx.begin();
 }
 
 void window::end() const
 {
-	gfx.end();
+	_gfx.end();
 }
 
 LRESULT window::WndMsgSetup(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept
