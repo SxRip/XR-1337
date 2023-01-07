@@ -25,7 +25,6 @@ void render::create(HWND hwnd)
 	VERIFYD3D(_pD3D->GetAdapterDisplayMode(D3DADAPTER_DEFAULT, &display));
 
 	RECT rc{};
-
 	GetWindowRect(hwnd, &rc);
 
 	params.Windowed = true;
@@ -40,7 +39,7 @@ void render::create(HWND hwnd)
 		D3DDEVTYPE::D3DDEVTYPE_HAL, hwnd, D3DCREATE_MIXED_VERTEXPROCESSING, &params, &_pDevice));
 
 	VERIFYD3D(_pDevice->SetRenderState(D3DRENDERSTATETYPE::D3DRS_ZENABLE, D3DZB_FALSE));
-	VERIFYD3D(_pDevice->SetRenderState(D3DRENDERSTATETYPE::D3DRS_ZWRITEENABLE, false));
+	VERIFYD3D(_pDevice->SetRenderState(D3DRENDERSTATETYPE::D3DRS_ZWRITEENABLE,	false));
 	VERIFYD3D(_pDevice->SetRenderState(D3DRENDERSTATETYPE::D3DRS_CULLMODE, D3DCULL_CW));
 
 	IMGUI_CHECKVERSION();

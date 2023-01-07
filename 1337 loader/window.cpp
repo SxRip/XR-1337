@@ -36,7 +36,6 @@ void window::end() const
 
 LRESULT window::WndMsgSetup(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept
 {
-	ImGui_ImplWin32_WndProcHandler(hwnd, msg, wParam, lParam);
 	switch (msg)
 	{
 		case WM_NCCREATE:
@@ -61,7 +60,7 @@ LRESULT window::WndHandleThunk(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam
 
 	return pWindow->WndMsgProc(hwnd, msg, wParam, lParam);
 }
-
+POINTS _window_position{};
 LRESULT window::WndMsgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept
 {
 	ImGui_ImplWin32_WndProcHandler(hwnd, msg, wParam, lParam);
@@ -75,6 +74,30 @@ LRESULT window::WndMsgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) no
 	case WM_SYSCOMMAND:
 		if ((lParam & 0xfff0) == SC_KEYMENU)
 			return 0;
+		break;
+
+	case WM_LBUTTONDOWN:
+		{
+			_window_position = MAKEPOINTS(lParam);
+			break;
+		}
+
+	case WM_MOUSEMOVE:
+		{
+			if (wParam != MK_LBUTTON)
+				break;
+			const auto points = MAKEPOINTS(lParam);
+
+			RECT rc{};
+			VERIFY(GetWindowRect(hwnd, &rc));
+
+			rc.left += points.x - _window_position.x;
+			rc.top += points.y - _window_position.y;
+
+			VERIFY(SetWindowPos(hwnd, nullptr, rc.left, rc.top,
+				0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW));
+			break;
+		}
 	}
 
 	return DefWindowProc(hwnd, msg, wParam, lParam);
